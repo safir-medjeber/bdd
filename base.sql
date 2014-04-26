@@ -17,7 +17,7 @@ DROP TABLE Facture;
 
 
 CREATE TABLE Vehicule(
-       idDisponible integer,
+       idDisponible serial,
        heure date,
        PRIMARY KEY(idDisponible)
 );       
@@ -35,36 +35,37 @@ CREATE TABLE Ville(
 
 
 CREATE TABLE Suggestion(
-       idSuggestion integer,
+       idSuggestion serial,
        suggestion varchar(256),
        PRIMARY KEY(idSuggestion)
 );
 
 
 CREATE TABLE Disponibilite(
-       idDisponibilite integer,
+       idDisponibilite serial,
        jour date,
        PRIMARY KEY(idDisponibilite)
 );
        
 
 CREATE TABLE Photo(
-       idPhoto integer,
+       idPhoto serial,
        image varchar(64),
        PRIMARY KEY(idPhoto)
 );
 
 
 CREATE TABLE Adresse(
-       idAdresse integer,	
+       idAdresse serial,	
        cp integer,
        numero integer,
-       rue varchar(256)
+       rue varchar(256),
+       PRIMARY KEY(idAdresse)
 );
 
 
 CREATE TABLE Logement(
-       idLogement integer,
+       idLogement serial,
        description varchar(512),
        type varchar(16),
        surface real,
@@ -77,42 +78,54 @@ CREATE TABLE Logement(
 CREATE TABLE Compte(
        login varchar(32),
        password varchar(63),
-       PRIMARY KEY(login)  
+       idPersonne integer,
+       PRIMARY KEY(login), 
+       FOREIGN KEY(idPersonne) REFERENCES Personne(idPersonne)
 );
 
 
 CREATE TABLE Prestation(
-       idPrestation integer,
+       idPrestation serial,
        prestation varchar(32),
        prix money,
-       PRIMARY KEY(idPresatation)  
+       idLogement  integer,
+       PRIMARY KEY(idPrestation),
+       FOREIGN KEY(idLogement) REFERENCES Personne(idLogement)
+  
 );	
 
 
 CREATE TABLE Reservation(
-       idReservation integer,
+       idReservation serial,
        date_reservation date,
        debut date,
-       fin date,    
-       PRIMARY KEY(idReservation)
+       fin date,   
+       idPersonne integer, 
+       PRIMARY KEY(idReservation),
+       FOREIGN KEY(idPersonne) REFERENCES Personne(idPersonne),
+       FOREIGN KEY(idLogement) REFERENCES Personne(idLogement)
 );	       
 
 
 CREATE TABLE Reduction(
-       idReduction integer,
+       idReduction serial,
        pourcentage integer,
        PRIMARY KEY(idReduction)
 );
 
 
 CREATE TABLE Reduction_duree(
-       duree_min integer
+       duree_min integer,
+       idReduction integer,
+       FOREIGN KEY(idReduction) REFERENCES Reduction(idReduction)
 );
 
 
 CREATE TABLE Reduction_periode(
        debut date,
-       fin date
+       fin date,
+       idReduction integer,	
+       FOREIGN KEY(idReduction) REFERENCES Reduction(idReduction)
 );
 
 
@@ -121,13 +134,22 @@ CREATE TABLE Personne(
        nom varchar(32),
        prenom varchar(32),
        mail varchar(64),
-       PRIMARY KEY(idPersonne)
+       idAdresse integer, 
+       login integer,    
+       PRIMARY KEY(idPersonne),
+       FOREIGN KEY(idAdresse) REFERENCES Adresse(idAdresse)
 );
 
 
 CREATE TABLE Facture(
-       idFacture integer,
-       date_facture timestamp,	
-       PRIMARY KEY(idFacture)
+       idFacture serial,
+       dateFacture timestamp,		
+       montant money, 
+       idPayeur integer,
+       idLoueur integer,
+       idReservation integer,	
+       PRIMARY KEY(idFacture),
+       FOREIGN KEY(idPayeur, idLoueur) REFERENCES Personne(idPersonne,idPersonne),
+       FOREIGN KEY(idReservation) REFERENCES Reservation(idReservation)
 );
 	

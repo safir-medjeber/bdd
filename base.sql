@@ -1,57 +1,71 @@
-DROP TABLE Vehicule;
-DROP TABLE Transport;
-DROP TABLE Ville;
-DROP TABLE Suggestion;
-DROP TABLE Disponibilite;
-DROP TABLE Photo;
-DROP TABLE Adresse;
-DROP TABLE Logement;
-DROP TABLE Compte;
-DROP TABLE Prestation;
-DROP TABLE Reservation;
-DROP TABLE Reduction;
-DROP TABLE Reduction_duree;
-DROP TABLE Reduction_periode;
-DROP TABLE Personne;
-DROP TABLE Facture;
+DROP TABLE IF EXISTS Vehicule;
+DROP TABLE IF EXISTS Transport;
+DROP TABLE IF EXISTS Ville;
+DROP TABLE IF EXISTS Suggestion;
+DROP TABLE IF EXISTS Disponibilite;
+DROP TABLE IF EXISTS Photo;
+DROP TABLE IF EXISTS Adresse;
+DROP TABLE IF EXISTS Logement;
+DROP TABLE IF EXISTS Compte;
+DROP TABLE IF EXISTS Prestation;
+DROP TABLE IF EXISTS Reservation;
+DROP TABLE IF EXISTS Reduction;
+DROP TABLE IF EXISTS Reduction_duree;
+DROP TABLE IF EXISTS Reduction_periode;
+DROP TABLE IF EXISTS Personne;
+DROP TABLE IF EXISTS Facture;
 
 
 CREATE TABLE Vehicule(
        idDisponible integer,
-       heure date,
-       PRIMARY KEY(idDisponible)
+       heure date,  
+       idReservation integer,
+       idTransport varchar(64),
+       PRIMARY KEY(idDisponible),
+       FOREIGN KEY(idReservation) REFERENCES Reservation(idReservation),
+       FOREIGN KEY(idTransport) REFERENCES Transport(ville)
 );       
 
 
 CREATE TABLE Transport(
+       ville varchar(64),
        nb_vehicule_libre integer,
-       prix money
+       prix money,
+       PRIMARY KEY(ville),
+       FOREIGN KEY(ville) REFERENCES Ville(ville)
 );
 
 
 CREATE TABLE Ville(
-       ville varchar(64)
+       ville varchar(64), 
+       PRIMARY KEY(ville)
 );
 
 
 CREATE TABLE Suggestion(
        idSuggestion integer,
        suggestion varchar(256),
-       PRIMARY KEY(idSuggestion)
+       ville varchar(64),
+       PRIMARY KEY(idSuggestion),
+       FOREIGN KEY(vill) REFERENCES Ville(ville)
 );
 
 
 CREATE TABLE Disponibilite(
        idDisponibilite integer,
        jour date,
-       PRIMARY KEY(idDisponibilite)
+       idLogement integer,
+       PRIMARY KEY(idDisponibilite),
+       FOREIGN KEY(idLogement) REFERENCES Logement(idLogement)
 );
        
 
 CREATE TABLE Photo(
        idPhoto integer,
        image varchar(64),
-       PRIMARY KEY(idPhoto)
+       idLogement integer,
+       PRIMARY KEY(idPhoto),
+       FOREIGN KEY(idLogement) REFERENCES Logement(idLogement)
 );
 
 
@@ -70,7 +84,11 @@ CREATE TABLE Logement(
        surface real,
        nb_pieces integer,
        prix money,
-       PRIMARY KEY(idLogement)
+       idAdresse integer,
+       login varchar(32),
+       PRIMARY KEY(idLogement),
+       FOREIGN KEY(idAdresse) REFERENCES Adresse(idAdresse),
+       FOREIGN KEY(login) REFERENCES Compte(login)
 );       	    
 
 

@@ -24,8 +24,9 @@ CREATE TABLE Ville(
 );
 
 CREATE TABLE Adresse(
-       idAdresse serial,	
-       cp integer,
+       idAdresse serial,
+       pays varchar(64),
+       cp varchar(32),
        numero integer,
        rue varchar(256),
        ville varchar(64),
@@ -34,7 +35,7 @@ CREATE TABLE Adresse(
 );
 
 CREATE TABLE Personne(
-       idPersonne integer,
+       idPersonne serial,
        nom varchar(32),
        prenom varchar(32),
        mail varchar(64),

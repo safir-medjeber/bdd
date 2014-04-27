@@ -10,7 +10,10 @@ public class PasswordField {
 	public static String readPassword(String prompt) {
 		String password = "";
 		try {
-			password = new String(System.console().readPassword("%s", prompt));
+			if(System.console() == null)
+				System.err.println("A faire sur le terminal");
+			else
+				password = new String(System.console().readPassword("%s", prompt));
 		} catch (Exception ioe) {
 			ioe.printStackTrace();
 		}

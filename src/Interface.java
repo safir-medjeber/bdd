@@ -3,21 +3,26 @@ import java.util.Scanner;
 
 public class Interface {
 	static Scanner in = new Scanner(System.in);
+	static ConnectionBase connection;
 
 	public static void main(String[] args) {
 		int choix;
+		if (args.length != 1)
+			usage();
 
-		clear();
 		try {
-			String password = PasswordField.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
-			new ConnectionBase(args[0], password);
+			String password = PasswordField
+					.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
+			connection = new ConnectionBase(args[0], password);
+
+			clear();
+			printMenu();
+			choix = readInt();
+			evalMenu(choix);
+
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
-		printMenu();
-		choix = readInt();
-		evalMenu(choix);
 	}
 
 	public static void clear() {
@@ -81,6 +86,13 @@ public class Interface {
 		rue = readString();
 
 		// return addr;
+	}
+
+	public static void usage() {
+		System.out
+				.println("Veuillez entrer votre nom identifiant pour Postgres.");
+		System.out.println("usage : java ChaineHotels <nomUtilisateur>");
+		System.exit(1);
 	}
 
 	public static int readInt() {

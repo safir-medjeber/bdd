@@ -7,7 +7,7 @@ public class ConnectionBase{
 	Connection connection;
 	
 	public ConnectionBase(String user, String password) throws SQLException {
-		connection = DriverManager.getConnection("jdbc:postgresql://localhost/base", user, password);
+		connection = DriverManager.getConnection("jdbc:postgresql://localhost/base", "marco", "base");
 	}
 	
 	public void close() throws SQLException{

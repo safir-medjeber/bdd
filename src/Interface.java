@@ -39,7 +39,7 @@ public class Interface {
 		System.out.println("------------------------------");
 	}
 
-	public static void evalMenu(int choice) {
+	public static void evalMenu(int choice) throws SQLException {
 		switch (choice) {
 		case 0:
 			System.exit(0);
@@ -52,8 +52,11 @@ public class Interface {
 			String login = readString();
 			String password = PasswordField.readPassword("password for "
 					+ login + ": ");
-			System.out.println("Connexion ... (" + login + " - " + password
-					+ ")");
+//			password = "QCX87SQJ7WX"; //TODO
+			if(connection.connecteCompte(login, password))
+				System.out.println("Vous etes connecté");
+			else
+				System.out.println("Erreur dans l'identifiant ou le mot de passe");
 			break;
 		case 3:
 			getPerson();
@@ -64,20 +67,29 @@ public class Interface {
 		}
 	}
 
-	public static void getPerson() {
-		String nom, prenom;
+	public static int getPerson() throws SQLException {
+		String nom, prenom, mail;
+		int adresse;
+		
 		System.out.print("Nom: ");
 		nom = readString();
 		System.out.print("Prenom: ");
 		prenom = readString();
-		getAddr();
+		System.out.print("Mail: ");
+		mail = readString();
+		adresse = getAddr();
 
+		return connection.insertPerson(nom, prenom, mail, adresse);
 		// return person
 	}
 
-	public static void getAddr() {
-		String ville, rue;
+	public static int getAddr() throws SQLException {
+		String pays, cp, ville, rue;
 		int numero;
+		System.out.print("Pays: ");
+		pays = readString();
+		System.out.print("Code Postal: ");
+		cp = readString();	
 		System.out.print("Ville: ");
 		ville = readString();
 		System.out.print("Numero: ");
@@ -85,13 +97,13 @@ public class Interface {
 		System.out.print("Rue: ");
 		rue = readString();
 
-		// return addr;
+		return connection.insertAdresse(pays, cp, numero, rue, ville);
 	}
 
 	public static void usage() {
 		System.out
 				.println("Veuillez entrer votre nom identifiant pour Postgres.");
-		System.out.println("usage : java ChaineHotels <nomUtilisateur>");
+		System.out.println("usage : java Interface <nomUtilisateur>");
 		System.exit(1);
 	}
 

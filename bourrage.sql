@@ -507,10 +507,3 @@ INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES 
 INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('imperdiet dictum magna. Ut tincidunt orci quis lectus. Nullam suscipit,','Chambre',165,1,485,69);
 INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('sodales elit erat vitae risus. Duis a mi fringilla mi','Appartement',774,8,7047,70);
 INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('tempus non, lacinia at, iaculis quis, pede. Praesent eu dui.','Chambre',787,6,5025,71);
-
-
-
-
-
-
-

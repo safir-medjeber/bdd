@@ -89,17 +89,39 @@ public class ConnectionBase {
 		insertCompte.executeUpdate();
 	}
 
-	public void selectionCritere(String lieu, String prix, String surface,
-			String nbPiece, String prestations, boolean aucunCrit)
+	public void selectionCritere(String lieu, String prix,
+			String surface, String nbPiece, String prestation, boolean aucunCrit)
 			throws SQLException {
 
 		selectCritere = connection.createStatement();
 		String cmd = "";
-		if (aucunCrit == true)
+		if (aucunCrit == true) {
 			cmd = "SELECT * FROM Logement";
+			selectCritere.execute(cmd);
+		}
+		if (lieu != "") {
+			cmd = "SELECT * FROM Logement";
+			selectCritere.execute(cmd);
+		}
 
-		selectCritere.execute(cmd);
-}
+		if (prix != "") {
+			cmd = "SELECT * FROM Logement WHERE prix=" + prix;
+			selectCritere.execute(cmd);
+		}
+		if (surface != "") {
+			cmd = "SELECT * FROM Logement WHERE surface=" + surface;
+			selectCritere.execute(cmd);
+		}
+		if (nbPiece != "") {
+			cmd = "SELECT * FROM Logement";
+			selectCritere.execute(cmd);
+		}
+		if (prestation != "") {
+			cmd = "SELECT * FROM Logement ";
+			selectCritere.execute(cmd);
+		}
+
+	}
 
 	private static int getGeneratedKey(PreparedStatement prStatement)
 			throws SQLException {

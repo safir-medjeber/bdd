@@ -73,6 +73,18 @@ public class Interface {
 			System.out.println("Erreur");
 		}
 	}
+	
+	public static void printLogement(ResultSet set) throws SQLException {
+		while (set != null && set.next()) {
+			System.out.println("Description\t: " + set.getString("description"));
+			System.out.println("Type\t\t: " +	set.getString("type"));
+			System.out.println("Surface\t\t: " + set.getFloat("surface"));
+			System.out.println("Nbr de pieces\t: " + set.getString("nb_pieces"));
+			System.out.println("Prix\t\t: " + set.getFloat("prix"));
+			System.out.println("Situe a\t\t: " + set.getString("ville"));
+			Interface.ligne(30);
+		}
+	}
 
 	public static void usage() {
 		System.out

@@ -21,18 +21,9 @@ public class InterfaceConnecte {
 			System.exit(0);
 			break;
 		case 1:
-			printLogement(Interface.connection.selectAppartement(login));
+			Interface.printLogement(Interface.connection.selectAppartement(login));
 			break;
 		}
 	}
-
-	private static void printLogement(ResultSet set) throws SQLException {
-		while (set != null && set.next()) {
-			Interface.print(set.getString("description"), 15);
-			Interface.print(String.valueOf(set.getInt("nb_pieces")), 10);
-			Interface.print(set.getString("ville"), 10);
-		}
-	}
-
 
 }

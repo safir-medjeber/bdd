@@ -9,7 +9,7 @@ public class ConnectionBase {
 
 	private Connection connection;
 	private PreparedStatement selectCompte, selectVille, insertVille,
-			insertAdresse, insertPerson, insertCompte, selectAppart;
+	insertAdresse, insertPerson, insertCompte, selectAppart;
 	static Statement selectCritere;
 
 	public ConnectionBase(String user, String password) throws SQLException {
@@ -91,7 +91,7 @@ public class ConnectionBase {
 
 	public void selectionCritere(String lieu, String prix,
 			String surface, String nbPiece, String prestation, boolean aucunCrit)
-			throws SQLException {
+					throws SQLException {
 
 		selectCritere = connection.createStatement();
 		String cmd = "";
@@ -100,8 +100,14 @@ public class ConnectionBase {
 			selectCritere.execute(cmd);
 		}
 		if (lieu != "") {
-			cmd = "SELECT * FROM Logement";
-			selectCritere.execute(cmd);
+			String []decoup;
+			decoup=lieu.split(",");
+			for (int i = 0; i < decoup.length; i++) {
+				cmd = "SELECT description, type, surface, nb_pieces, prix, ville FROM Logement " +
+						"LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse WHERE Adresse.ville='"+ decoup[i]+"'";
+				selectCritere.execute(cmd);
+
+			}
 		}
 
 		if (prix != "") {
@@ -113,12 +119,17 @@ public class ConnectionBase {
 			selectCritere.execute(cmd);
 		}
 		if (nbPiece != "") {
-			cmd = "SELECT * FROM Logement";
+			cmd = "SELECT * FROM Logemen WHERE nbPiece="+nbPiece;
 			selectCritere.execute(cmd);
 		}
+
 		if (prestation != "") {
-			cmd = "SELECT * FROM Logement ";
-			selectCritere.execute(cmd);
+			String []decoup;
+			decoup=lieu.split(",");
+			for (int i = 0; i < decoup.length; i++) {
+				cmd = "SELECT * FROM Logement WHERE Adresse.ville='"+ decoup[i]+"'";
+				selectCritere.execute(cmd);
+			}
 		}
 
 	}

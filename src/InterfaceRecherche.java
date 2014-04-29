@@ -79,6 +79,7 @@ public class InterfaceRecherche {
 					prix=sc.nextLine();
 					break;
 
+					
 				case 3:
 					System.out.println("\n\nSpecification de la Surface ");
 					Interface.ligne();

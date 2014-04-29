@@ -11,13 +11,9 @@ public class ConnectionBase {
 	static Statement selectCritere;
 
 	PreparedStatement selectCompte, selectVille, insertVille, insertAdresse,
-			insertPerson;
+	insertPerson;
 
-	
-	
-	
-	
-	
+
 	public ConnectionBase(String user, String password) throws SQLException {
 		connection = DriverManager.getConnection(
 				"jdbc:postgresql://localhost:5432/base", user, "base");
@@ -40,7 +36,7 @@ public class ConnectionBase {
 				Statement.RETURN_GENERATED_KEYS);
 	}
 
-	
+
 	public void close() throws SQLException {
 		connection.close();
 	}
@@ -80,23 +76,52 @@ public class ConnectionBase {
 
 		return getGeneratedKey(insertPerson);
 	}
-	
-	
-	 public static void selectionCritere
-	 (String lieu, String prix, String surface, 
-			 	String nbPiece, String prestations, boolean aucunCrit) throws SQLException{
-			
-		 	selectCritere = connection.createStatement();
+
+
+	public static void selectionCritere(String lieu, String prix, String surface, 
+			String nbPiece, String prestation, boolean aucunCrit) throws SQLException{
+
+		selectCritere = connection.createStatement();
 		String cmd="";
-			if(aucunCrit==true)
-				cmd = "SELECT * FROM Logement";
-			
-				selectCritere.executeUpdate(cmd);
-		  }
+		if(aucunCrit==true){
+			cmd = "SELECT * FROM Logement";	
+			selectCritere.executeUpdate(cmd);
+		}
+		if(lieu!=""){
+			cmd = "SELECT * FROM Logement";	
+			selectCritere.executeUpdate(cmd);
+		}
+		
+		if(prix!=""){
+			cmd = "SELECT * FROM Logement WHERE prix="+prix;	
+			selectCritere.executeUpdate(cmd);
+		}
+		if(surface!=""){
+			cmd = "SELECT * FROM Logement WHERE surface="+surface;	
+			selectCritere.executeUpdate(cmd);
+		}
+		if(nbPiece!=""){
+			cmd = "SELECT * FROM Logement";	
+			selectCritere.executeUpdate(cmd);
+		}
+		if(prestation!=""){
+			cmd = "SELECT * FROM Logement ";	
+			selectCritere.executeUpdate(cmd);
+		}
+
+	}
+
+
+	public static void testArgs(String lieu, String prix, String surface,
+			String nbPiece, String prestation){
+	String cmd="";
 	
 	
-	
-	
+		
+		
+	}
+
+
 	private static int getGeneratedKey(PreparedStatement prStatement) throws SQLException{
 		int n = prStatement.executeUpdate();
 		ResultSet set = prStatement.getGeneratedKeys();

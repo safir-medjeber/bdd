@@ -59,7 +59,7 @@ CREATE TABLE Logement(
        type varchar(16),
        surface real,
        nb_pieces integer,
-       prix money,
+       prix real,
        idAdresse integer,
        login varchar(32),
        PRIMARY KEY(idLogement),
@@ -86,11 +86,6 @@ CREATE TABLE Transport(
        PRIMARY KEY(ville),
        FOREIGN KEY(ville) REFERENCES Ville(ville)
 );
-
--- ----------------------------------------------------------
--- ----------------------------------------------------------
--- ----------------------------------------------------------
-
 
 CREATE TABLE Vehicule(
        idDisponible serial,

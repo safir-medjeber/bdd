@@ -1,4 +1,3 @@
-import java.awt.geom.GeneralPath;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,13 +7,20 @@ import java.sql.Statement;
 
 public class ConnectionBase {
 
-	Connection connection;
+	static Connection connection;
+	static Statement selectCritere;
+
 	PreparedStatement selectCompte, selectVille, insertVille, insertAdresse,
 			insertPerson;
 
+	
+	
+	
+	
+	
 	public ConnectionBase(String user, String password) throws SQLException {
 		connection = DriverManager.getConnection(
-				"jdbc:postgresql://localhost:5432/base", "marco", "base");
+				"jdbc:postgresql://localhost:5432/base", user, "base");
 
 		String connectionQuery = "SELECT login FROM Compte WHERE login=? AND password=?";
 		selectCompte = connection.prepareStatement(connectionQuery);
@@ -34,6 +40,7 @@ public class ConnectionBase {
 				Statement.RETURN_GENERATED_KEYS);
 	}
 
+	
 	public void close() throws SQLException {
 		connection.close();
 	}
@@ -73,6 +80,22 @@ public class ConnectionBase {
 
 		return getGeneratedKey(insertPerson);
 	}
+	
+	
+	 public static void selectionCritere
+	 (String lieu, String prix, String surface, 
+			 	String nbPiece, String prestations, boolean aucunCrit) throws SQLException{
+			
+		 	selectCritere = connection.createStatement();
+		String cmd="";
+			if(aucunCrit==true)
+				cmd = "SELECT * FROM Logement";
+			
+				selectCritere.executeUpdate(cmd);
+		  }
+	
+	
+	
 	
 	private static int getGeneratedKey(PreparedStatement prStatement) throws SQLException{
 		int n = prStatement.executeUpdate();

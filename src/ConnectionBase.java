@@ -9,7 +9,7 @@ public class ConnectionBase {
 
 	private Connection connection;
 	private PreparedStatement selectCompte, selectVille, insertVille,
-			insertAdresse, insertPerson, insertCompte, selectAppart;
+	insertAdresse, insertPerson, insertCompte, selectAppart;
 	static Statement selectCritere;
 
 	public ConnectionBase(String user, String password) throws SQLException {
@@ -89,17 +89,50 @@ public class ConnectionBase {
 		insertCompte.executeUpdate();
 	}
 
-	public void selectionCritere(String lieu, String prix, String surface,
-			String nbPiece, String prestations, boolean aucunCrit)
-			throws SQLException {
+	public void selectionCritere(String lieu, String prix,
+			String surface, String nbPiece, String prestation, boolean aucunCrit)
+					throws SQLException {
 
 		selectCritere = connection.createStatement();
 		String cmd = "";
-		if (aucunCrit == true)
+		if (aucunCrit == true) {
 			cmd = "SELECT * FROM Logement";
+			selectCritere.execute(cmd);
+		}
+		if (lieu != "") {
+			String []decoup;
+			decoup=lieu.split(",");
+			for (int i = 0; i < decoup.length; i++) {
+				cmd = "SELECT description, type, surface, nb_pieces, prix, ville FROM Logement " +
+						"LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse WHERE Adresse.ville='"+ decoup[i]+"'";
+				selectCritere.execute(cmd);
 
-		selectCritere.execute(cmd);
-}
+			}
+		}
+
+		if (prix != "") {
+			cmd = "SELECT * FROM Logement WHERE prix=" + prix;
+			selectCritere.execute(cmd);
+		}
+		if (surface != "") {
+			cmd = "SELECT * FROM Logement WHERE surface=" + surface;
+			selectCritere.execute(cmd);
+		}
+		if (nbPiece != "") {
+			cmd = "SELECT * FROM Logemen WHERE nbPiece="+nbPiece;
+			selectCritere.execute(cmd);
+		}
+
+		if (prestation != "") {
+			String []decoup;
+			decoup=lieu.split(",");
+			for (int i = 0; i < decoup.length; i++) {
+				cmd = "SELECT * FROM Logement WHERE Adresse.ville='"+ decoup[i]+"'";
+				selectCritere.execute(cmd);
+			}
+		}
+
+	}
 
 	private static int getGeneratedKey(PreparedStatement prStatement)
 			throws SQLException {

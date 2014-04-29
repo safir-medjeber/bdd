@@ -8,12 +8,13 @@ import java.sql.Statement;
 public class ConnectionBase {
 
 	private Connection connection;
-	private PreparedStatement selectCompte, selectVille, insertVille, insertAdresse,
-			insertPerson, insertCompte, selectAppart;
+	private PreparedStatement selectCompte, selectVille, insertVille,
+			insertAdresse, insertPerson, insertCompte, selectAppart;
+	static Statement selectCritere;
 
 	public ConnectionBase(String user, String password) throws SQLException {
 		connection = DriverManager.getConnection(
-				"jdbc:postgresql://localhost:5432/base", "marco", "base");
+				"jdbc:postgresql://localhost:5432/base", user, "base");
 
 		String connectionQuery = "SELECT login FROM Compte WHERE login=? AND password=?";
 		selectCompte = connection.prepareStatement(connectionQuery);
@@ -31,10 +32,10 @@ public class ConnectionBase {
 		String insertPersonQuery = "INSERT INTO Personne (nom, prenom, mail, idAdresse) VALUES (?,?,?,?)";
 		insertPerson = connection.prepareStatement(insertPersonQuery,
 				Statement.RETURN_GENERATED_KEYS);
-	
+
 		String insertCompteQuery = "INSERT INTO Compte (login, password, idPersonne) VALUES (?,?,?)";
 		insertCompte = connection.prepareStatement(insertCompteQuery);
-		
+
 		String selectAppartQuery = "SELECT description, type, surface, nb_pieces, prix, ville FROM Logement LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse";
 		selectAppart = connection.prepareStatement(selectAppartQuery);
 	}
@@ -78,16 +79,30 @@ public class ConnectionBase {
 
 		return getGeneratedKey(insertPerson);
 	}
-	
-	public void insertCompte(String login, String password, int n) throws SQLException {
+
+	public void insertCompte(String login, String password, int n)
+			throws SQLException {
 		insertCompte.setString(1, login);
 		insertCompte.setString(2, password);
 		insertCompte.setInt(3, n);
-		
+
 		insertCompte.executeUpdate();
 	}
-	
-	private static int getGeneratedKey(PreparedStatement prStatement) throws SQLException{
+
+	public void selectionCritere(String lieu, String prix, String surface,
+			String nbPiece, String prestations, boolean aucunCrit)
+			throws SQLException {
+
+		selectCritere = connection.createStatement();
+		String cmd = "";
+		if (aucunCrit == true)
+			cmd = "SELECT * FROM Logement";
+
+		selectCritere.execute(cmd);
+}
+
+	private static int getGeneratedKey(PreparedStatement prStatement)
+			throws SQLException {
 		int n = prStatement.executeUpdate();
 		ResultSet set = prStatement.getGeneratedKeys();
 		if (set.next()) {
@@ -99,6 +114,5 @@ public class ConnectionBase {
 	public ResultSet selectAppartement(String login) throws SQLException {
 		return selectAppart.executeQuery();
 	}
-
 
 }

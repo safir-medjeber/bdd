@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class InterfaceInscription {
 	
+	
 	static Scanner in = new Scanner(System.in);
 
 	public static int getPerson() throws SQLException {

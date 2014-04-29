@@ -12,8 +12,7 @@ public class Interface {
 			usage();
 
 		try {
-			String password = PasswordField
-					.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
+			String password = PasswordField.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
 			connection = new ConnectionBase(args[0], password);
 
 			printMenu();

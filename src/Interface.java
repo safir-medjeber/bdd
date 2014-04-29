@@ -1,3 +1,4 @@
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -40,6 +41,7 @@ public class Interface {
 	}
 
 	public static void evalMenu(int choice) throws SQLException {
+		String login, password;
 		switch (choice) {
 		case 0:
 			System.exit(0);
@@ -49,28 +51,64 @@ public class Interface {
 			break;
 		case 2:
 			System.out.print("login: ");
-			String login = readString();
-			String password = PasswordField.readPassword("password for "
-					+ login + ": ");
-//			password = "QCX87SQJ7WX"; //TODO
-			if(connection.connecteCompte(login, password))
-				System.out.println("Vous etes connecté");
-			else
-				System.out.println("Erreur dans l'identifiant ou le mot de passe");
+			login = readString();
+			password = PasswordField.readPassword("password for " + login
+					+ ": ");
+			// password = "QCX87SQJ7WX"; //TODO
+			if (connection.connecteCompte(login, password)) {
+				printConnecter();
+				choice = readInt();
+				evalConnecte(choice, login);
+			} else
+				System.out
+						.println("Erreur dans l'identifiant ou le mot de passe");
 			break;
 		case 3:
-			getPerson();
-			System.out.println("Inscription ...");
+			int n = getPerson();
+			System.out.print("login: ");
+			login = readString();
+			password = PasswordField.readPassword("password: ");
+
+			connection.insertCompte(login, password, n);
 			break;
 		default:
 			System.out.println("Erreur");
 		}
 	}
 
+	private static void printConnecter() {
+		System.out.println("Veuillez entrez votre choix : ");
+		System.out.println("------------------------------");
+		System.out.println("0 - Fin");
+		System.out.println("1 - Voir mes appartements");
+		System.out.println("2 - Ajouter un appartement");
+		System.out.println("------------------------------");
+
+	}
+
+	private static void evalConnecte(int choice, String login) throws SQLException {
+		switch (choice) {
+		case 0:
+			System.exit(0);
+			break;
+		case 1:
+			printLogement(connection.selectAppartement(login));
+			break;
+		}
+	}
+
+	private static void printLogement(ResultSet set) throws SQLException {
+		while(set != null && set.next()){
+			print(set.getString("description"), 15);
+			print(String.valueOf(set.getInt("nb_pieces")), 10);
+			print(set.getString("ville"), 10);
+		}
+	}
+
 	public static int getPerson() throws SQLException {
 		String nom, prenom, mail;
 		int adresse;
-		
+
 		System.out.print("Nom: ");
 		nom = readString();
 		System.out.print("Prenom: ");
@@ -89,7 +127,7 @@ public class Interface {
 		System.out.print("Pays: ");
 		pays = readString();
 		System.out.print("Code Postal: ");
-		cp = readString();	
+		cp = readString();
 		System.out.print("Ville: ");
 		ville = readString();
 		System.out.print("Numero: ");
@@ -109,20 +147,27 @@ public class Interface {
 
 	public static int readInt() {
 		try {
-			return in.nextInt();
+			String s = in.nextLine();
+			return Integer.parseInt(s);
 		} catch (Exception e) {
 			System.out.print(" ↳ Entrez un nombre: ");
-			in.next();
 			return readInt();
 		}
 	}
 
 	static public String readString() {
 		try {
-			return in.next();
+			return in.nextLine();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
+
+    public static void print(String s, int i) {
+	System.out.print(s);
+	for (i -= s.length(); i >= 0; i --)
+	    System.out.print(" ");
+    }
+    
 }

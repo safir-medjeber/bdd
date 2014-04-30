@@ -63,11 +63,7 @@ public class Interface {
 						.println("Erreur dans l'identifiant ou le mot de passe");
 			break;
 		case 3:
-			int n = InterfaceInscription.getPerson();
-			System.out.print("login: ");
-			login = readString();
-			password = PasswordField.readPassword("password: ");
-			connection.insertCompte(login, password, n);
+			InterfaceInscription.getCompte();
 			break;
 		default:
 			System.out.println("Erreur");
@@ -118,10 +114,13 @@ public class Interface {
 		}
 	}
 
-	public static void print(String s, int i) {
-		System.out.print(s);
-		for (i -= s.length(); i >= 0; i--)
-			System.out.print(" ");
+	static public float readFloat(){
+		try {
+			String s = in.nextLine();
+			return Float.parseFloat(s);
+		} catch (Exception e) {
+			System.out.print(" ↳ Entrez un nombre: ");
+					return readInt();
+		}
 	}
-
 }

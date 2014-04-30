@@ -1,12 +1,19 @@
 import java.sql.SQLException;
-import java.util.Scanner;
 
 
 public class InterfaceInscription {
 	
+	public static void getCompte() throws SQLException   {
+		String login, password;
+		int n;
+		
+		n = getPerson();
+		System.out.print("login: ");
+		login = Interface.readString();
+		password = PasswordField.readPassword("password: ");
+		Interface.connection.insertCompte(login, password, n);
+	}
 	
-	static Scanner in = new Scanner(System.in);
-
 	public static int getPerson() throws SQLException {
 		String nom, prenom, mail;
 		int adresse;
@@ -20,7 +27,6 @@ public class InterfaceInscription {
 		adresse = getAddr();
 
 		return Interface.connection.insertPerson(nom, prenom, mail, adresse);
-		// return person
 	}
 
 	public static int getAddr() throws SQLException {
@@ -39,6 +45,5 @@ public class InterfaceInscription {
 
 		return Interface.connection.insertAdresse(pays, cp, numero, rue, ville);
 	}
-	
-	
+
 }

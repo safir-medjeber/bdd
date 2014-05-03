@@ -132,8 +132,10 @@ CREATE TABLE Prestation(
 
 CREATE TABLE Reduction(
        idReduction serial,
-       pourcentage integer,
-       PRIMARY KEY(idReduction)
+       pourcentage real,
+       idLogement integer,
+       PRIMARY KEY(idReduction),
+       FOREIGN KEY(idLogement) REFERENCES Logement(idLogement)
 );
 
 CREATE TABLE Reduction_duree(

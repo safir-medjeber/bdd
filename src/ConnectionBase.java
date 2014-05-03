@@ -7,15 +7,15 @@ import java.sql.Statement;
 
 public class ConnectionBase {
 
-	private Connection connection;
+	static Connection connection;
 	private PreparedStatement selectCompte, selectVille, insertVille,
-			insertAdresse, insertPerson, insertCompte, selectAppart,
-			insertAppart, insertPrestation;
-	static Statement selectCritere;
+	insertAdresse, insertPerson, insertCompte, selectAppart,
+	insertAppart, insertPrestation;
 
+	
+	
 	public ConnectionBase(String user, String password) throws SQLException {
-		connection = DriverManager.getConnection(
-				"jdbc:postgresql://localhost:5432/base", user, "base");
+		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/base", user, "base");
 
 		String connectionQuery = "SELECT login FROM Compte WHERE login=? AND password=?";
 		selectCompte = connection.prepareStatement(connectionQuery);
@@ -43,7 +43,7 @@ public class ConnectionBase {
 		String insertAppartQuery = "INSERT INTO Logement (Description, type, surface, nb_pieces, prix, idAdresse, login) VALUES (?,?,?,?,?,?,?)";
 		insertAppart = connection.prepareStatement(insertAppartQuery,
 				Statement.RETURN_GENERATED_KEYS);
-	
+
 		String insertPrestationQuery = "INSERT INTO Prestation (prestation, prix, idLogement) VALUES (?,?,?)";
 		insertPrestation = connection.prepareStatement(insertPrestationQuery);
 	}
@@ -97,53 +97,7 @@ public class ConnectionBase {
 		insertCompte.executeUpdate();
 	}
 
-	public void selectionCritere(String lieu, String prix,
-			String surface, String nbPiece, String prestation, 
-			String dates, boolean aucunCrit)
-					throws SQLException {
-		selectCritere = connection.createStatement();
-		String cmd = "";
-		if (aucunCrit == true) {
-			cmd = "SELECT description, type, surface, nb_pieces, prix , ville FROM Logement LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse";
-			Interface.printLogement(selectCritere.executeQuery(cmd));
-		}
-		if (lieu != "") {
-			String[] decoup;
-			decoup = lieu.split(",");
-			for (int i = 0; i < decoup.length; i++) {
-				cmd = "SELECT description, type, surface, nb_pieces, prix, ville FROM Logement "
-						+ "LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse WHERE Adresse.ville='"
-						+ decoup[i] + "'";
-				selectCritere.execute(cmd);
-
-			}
-		}
-
-		if (prix != "") {
-			cmd = "SELECT * FROM Logement WHERE prix=" + prix;
-			selectCritere.execute(cmd);
-		}
-		if (surface != "") {
-			cmd = "SELECT * FROM Logement WHERE surface=" + surface;
-			selectCritere.execute(cmd);
-		}
-		if (nbPiece != "") {
-			cmd = "SELECT * FROM Logement WHERE nbPiece="+nbPiece;
-			selectCritere.execute(cmd);
-		}
-
-		if (prestation != "") {
-			String[] decoup;
-			decoup = lieu.split(",");
-			for (int i = 0; i < decoup.length; i++) {
-				cmd = "SELECT * FROM Logement WHERE Adresse.ville='"
-						+ decoup[i] + "'";
-				selectCritere.execute(cmd);
-			}
-		}
-
-	}
-
+	
 	private static int getGeneratedKey(PreparedStatement prStatement)
 			throws SQLException {
 		int n = prStatement.executeUpdate();
@@ -162,7 +116,7 @@ public class ConnectionBase {
 
 	public int[] insertAppart(String description, int type, int nbChambres,
 			float surface, int nbPieces, float prix, int idAdresse, String login)
-			throws SQLException {
+					throws SQLException {
 		String s = "";
 		int[] t = new int[nbChambres];
 
@@ -186,7 +140,7 @@ public class ConnectionBase {
 		insertPrestation.setString(1, prestation);
 		insertPrestation.setFloat(2, prix);
 		insertPrestation.setInt(3, appart);
-		
+
 		insertPrestation.executeUpdate();
 	}
 }

@@ -5,15 +5,15 @@ import java.util.Scanner;
 public class Interface {
 	static Scanner in = new Scanner(System.in);
 	static ConnectionBase connection;
-
+	static int largeurEcran = 70;
+	
 	public static void main(String[] args) {
-		if (args.length != 1)
+		if (args.length != 2)
 			usage();
 
 		try {
-			String password = PasswordField
-					.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
-			connection = new ConnectionBase(args[0], password);
+		//	String password = PasswordField.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
+			connection = new ConnectionBase(args[0], args[1]);
 
 
 			MenuPrincipal();
@@ -34,14 +34,19 @@ public class Interface {
 		System.out.println("1 - Effectuer une recherche");
 		System.out.println("2 - Se connecter");
 		System.out.println("3 - S'inscrire");
-		ligne(70);
+		ligne(largeurEcran);
 		choix = readInt();
+		while(choix > 3){
+			System.out.print(" ↳ Entrez un nombre: ");
+			choix = readInt();			
+		}
 		evalMenu(choix);
 	}
 
 	public static void evalMenu(int choice) throws SQLException {
 		String login, password;
 		String choixCrit;
+		
 		switch (choice) {
 
 		case 0:
@@ -120,18 +125,17 @@ public class Interface {
 
 	public static void enTete(String txt) {
 		efface();
-		ligne(70);
-		espace((70 / 2) - (txt.length() / 2));
+		ligne(largeurEcran);
+		espace((largeurEcran / 2) - (txt.length() / 2));
 		System.out.println(txt);
-		ligne(70);
+		ligne(largeurEcran);
 	}
 
 	public static void enTete2(String txt) {
-		efface();
-		ligne(70);
-		espace((70 / 2) - (txt.length() / 2));
+		ligne(largeurEcran);
+		espace((largeurEcran / 2) - (txt.length() / 2));
 		System.out.println(txt);
-		ligne(70);
+		ligne(largeurEcran);
 	}
 
 	static public float readFloat() {

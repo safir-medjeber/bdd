@@ -9,7 +9,8 @@ public class ConnectionBase {
 
 	private Connection connection;
 	private PreparedStatement selectCompte, selectVille, insertVille,
-	insertAdresse, insertPerson, insertCompte, selectAppart, insertAppart;
+			insertAdresse, insertPerson, insertCompte, selectAppart,
+			insertAppart, insertPrestation;
 	static Statement selectCritere;
 
 	public ConnectionBase(String user, String password) throws SQLException {
@@ -38,9 +39,13 @@ public class ConnectionBase {
 
 		String selectAppartQuery = "SELECT description, type, surface, nb_pieces, prix, ville FROM Logement LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse WHERE login=?";
 		selectAppart = connection.prepareStatement(selectAppartQuery);
-	
+
 		String insertAppartQuery = "INSERT INTO Logement (Description, type, surface, nb_pieces, prix, idAdresse, login) VALUES (?,?,?,?,?,?,?)";
-		insertAppart = connection.prepareStatement(insertAppartQuery);
+		insertAppart = connection.prepareStatement(insertAppartQuery,
+				Statement.RETURN_GENERATED_KEYS);
+	
+		String insertPrestationQuery = "INSERT INTO Prestation (prestation, prix, idLogement) VALUES (?,?,?)";
+		insertPrestation = connection.prepareStatement(insertPrestationQuery);
 	}
 
 	public void close() throws SQLException {
@@ -92,9 +97,9 @@ public class ConnectionBase {
 		insertCompte.executeUpdate();
 	}
 
-	public void selectionCritere(String lieu, String prix,
-			String surface, String nbPiece, String prestation, boolean aucunCrit)
-					throws SQLException {
+	public void selectionCritere(String lieu, String prix, String surface,
+			String nbPiece, String prestation, boolean aucunCrit)
+			throws SQLException {
 
 		selectCritere = connection.createStatement();
 		String cmd = "";
@@ -103,11 +108,12 @@ public class ConnectionBase {
 			selectCritere.execute(cmd);
 		}
 		if (lieu != "") {
-			String []decoup;
-			decoup=lieu.split(",");
+			String[] decoup;
+			decoup = lieu.split(",");
 			for (int i = 0; i < decoup.length; i++) {
-				cmd = "SELECT description, type, surface, nb_pieces, prix, ville FROM Logement " +
-						"LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse WHERE Adresse.ville='"+ decoup[i]+"'";
+				cmd = "SELECT description, type, surface, nb_pieces, prix, ville FROM Logement "
+						+ "LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse WHERE Adresse.ville='"
+						+ decoup[i] + "'";
 				selectCritere.execute(cmd);
 
 			}
@@ -122,15 +128,16 @@ public class ConnectionBase {
 			selectCritere.execute(cmd);
 		}
 		if (nbPiece != "") {
-			cmd = "SELECT * FROM Logemen WHERE nbPiece="+nbPiece;
+			cmd = "SELECT * FROM Logemen WHERE nbPiece=" + nbPiece;
 			selectCritere.execute(cmd);
 		}
 
 		if (prestation != "") {
-			String []decoup;
-			decoup=lieu.split(",");
+			String[] decoup;
+			decoup = lieu.split(",");
 			for (int i = 0; i < decoup.length; i++) {
-				cmd = "SELECT * FROM Logement WHERE Adresse.ville='"+ decoup[i]+"'";
+				cmd = "SELECT * FROM Logement WHERE Adresse.ville='"
+						+ decoup[i] + "'";
 				selectCritere.execute(cmd);
 			}
 		}
@@ -149,21 +156,37 @@ public class ConnectionBase {
 
 	public ResultSet selectAppartement(String login) throws SQLException {
 		selectAppart.setString(1, login);
-		
+
 		return selectAppart.executeQuery();
 	}
 
-	public void insertAppart(String description, int type, int nbChambres,
-			float surface, int nbPieces, float prix, int idAdresse, String login) throws SQLException {
-		insertAppart.setString(1, description);
-		insertAppart.setInt(2, type);
-		insertAppart.setFloat(3, surface);
-		insertAppart.setInt(4, nbPieces);
-		insertAppart.setFloat(5, prix);
-		insertAppart.setInt(6, idAdresse);
-		insertAppart.setString(7, login);
-		
-		insertAppart.executeUpdate();
+	public int[] insertAppart(String description, int type, int nbChambres,
+			float surface, int nbPieces, float prix, int idAdresse, String login)
+			throws SQLException {
+		String s = "";
+		int[] t = new int[nbChambres];
+
+		for (int i = 0; i < nbChambres; i++) {
+			if (type == InterfaceConnecte.CHAMBRE)
+				s = "Chambre " + i + " - ";
+			insertAppart.setString(1, s + description);
+			insertAppart.setInt(2, type);
+			insertAppart.setFloat(3, surface);
+			insertAppart.setInt(4, nbPieces);
+			insertAppart.setFloat(5, prix);
+			insertAppart.setInt(6, idAdresse);
+			insertAppart.setString(7, login);
+
+			t[i] = getGeneratedKey(insertAppart);
+		}
+		return t;
 	}
 
+	public void insertPrestation(String prestation, float prix, int appart) throws SQLException {
+		insertPrestation.setString(1, prestation);
+		insertPrestation.setFloat(2, prix);
+		insertPrestation.setInt(3, appart);
+		
+		insertPrestation.executeUpdate();
+	}
 }

@@ -1,13 +1,14 @@
 import java.sql.SQLException;
 
-
 public class InterfaceConnecte {
+	public static final int CHAMBRE = 1, APPART = 0;
 
 	public static void printConnecter() {
 		System.out.println("Veuillez entrez votre choix : ");
 		System.out.println("------------------------------");
 		System.out.println("0 - Fin");
 		System.out.println("1 - Voir mes appartements");
+		System.out.println("2 - Modifier un appartement");
 		System.out.println("2 - Ajouter un appartement");
 		System.out.println("------------------------------");
 
@@ -15,14 +16,19 @@ public class InterfaceConnecte {
 
 	public static void evalConnecte(int choice, String login)
 			throws SQLException {
+		
 		switch (choice) {
 		case 0:
 			System.exit(0);
 			break;
 		case 1:
-			Interface.printLogement(Interface.connection.selectAppartement(login));
+			Interface.printLogement(Interface.connection
+					.selectAppartement(login));
 			break;
-		case 2: 
+		case 2:
+			modifAppart(login);
+			break;
+		case 3:
 			getAppartement(login);
 			break;
 		default:
@@ -30,36 +36,55 @@ public class InterfaceConnecte {
 		}
 	}
 
+	private static void modifAppart(String login) {
+		
+	}
+
 	private static void getAppartement(String login) throws SQLException {
-		String description;
+		String description, prestation;
 		int nbPieces, nbChambres = 1, type;
 		float surface, prix;
-		
+		int[] appart;
+
 		System.out.print("Description: ");
 		description = Interface.readString();
 		System.out.println("Type d'appartement: ");
 		System.out.println("0 - Appartement");
 		System.out.println("1 - Chambre d'hotes");
 		type = Interface.readInt();
-		while(type < 0 || type > 1){
+		while (type < 0 || type > 1) {
 			System.out.println("Entrer un nombre entre 0 et 1");
 			type = Interface.readInt();
 		}
-		if(type == 1){
+		if (type == CHAMBRE) {
 			System.out.print("Nombre chambres: ");
 			nbChambres = Interface.readInt();
 		}
-		System.out.println("Prix: ");
+		System.out.print("Prix: ");
 		prix = Interface.readFloat();
-		System.out.println("Surface: ");
+		System.out.print("Surface: ");
 		surface = Interface.readFloat();
-		System.out.println("Nombre de pieces: ");
+		System.out.print("Nombre de pieces: ");
 		nbPieces = Interface.readInt();
-	
+
 		System.out.println("--- Adresse ---");
 		int n = InterfaceInscription.getAddr();
 
-		Interface.connection.insertAppart(description, type, nbChambres, surface, nbPieces, prix, n, login);
+		appart = Interface.connection.insertAppart(description, type,
+				nbChambres, surface, nbPieces, prix, n, login);
+
+		System.out.println("--- Ajouter des prestations ---");
+		System.out.println("0 - Petit-déjeuner");
+		System.out.println("1 - Repas");
+		System.out.println("3 - Visite");
+		System.out.println("Autre");
+		prestation = Interface.readString();
+		while (prestation.length() != 0) {
+			System.out.println(prestation.length());
+			for (int i : appart)
+				Interface.connection.insertPrestation(prestation, prix, i);
+			prestation = Interface.readString();
+		}
 	}
 
 }

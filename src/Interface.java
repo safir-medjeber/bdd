@@ -7,7 +7,6 @@ public class Interface {
 	static ConnectionBase connection;
 
 	public static void main(String[] args) {
-		int choix;
 		if (args.length != 1)
 			usage();
 
@@ -16,53 +15,45 @@ public class Interface {
 					.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
 			connection = new ConnectionBase(args[0], password);
 
-			while (true) {
-				printMenu();
-				choix = readInt();
-				evalMenu(choix);
-			}
+
+			MenuPrincipal();
+
+			
 
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
 	}
 
-	public static void printMenu() {
-		System.out.println("Veuillez entrez votre choix : ");
-		System.out.println("------------------------------");
-		System.out.println("0 - Fin");
+	public static void MenuPrincipal() throws SQLException {
+
+		int choix;
+
+		enTete("AirChambreDhotes");
+		System.out.println("0 - Quitter l'application");
 		System.out.println("1 - Effectuer une recherche");
 		System.out.println("2 - Se connecter");
 		System.out.println("3 - S'inscrire");
-		System.out.println("------------------------------");
+		ligne(70);
+		choix = readInt();
+		evalMenu(choix);
 	}
 
 	public static void evalMenu(int choice) throws SQLException {
 		String login, password;
 		String choixCrit;
 		switch (choice) {
+
 		case 0:
 			System.exit(0);
 			break;
+
 		case 1:
-			InterfaceRecherche.printListeCritere();
-			choixCrit = readString();
-			InterfaceRecherche.evalChoixCrit(choixCrit);
+			InterfaceRecherche.listeCritere();
 			break;
 
 		case 2:
-			System.out.print("login: ");
-			login = readString();
-			password = PasswordField.readPassword("password for " + login
-					+ ": ");
-			// password = "QCX87SQJ7WX"; //TODO
-			if (connection.connecteCompte(login, password)) {
-				InterfaceConnecte.printConnecter();
-				choice = readInt();
-				InterfaceConnecte.evalConnecte(choice, login);
-			} else
-				System.out
-						.println("Erreur dans l'identifiant ou le mot de passe");
+			InterfaceConnecte.testeConnection();
 			break;
 		case 3:
 			InterfaceInscription.getCompte();
@@ -103,19 +94,44 @@ public class Interface {
 		}
 	}
 
-	public static void ligne(int n) {
-		for (int i = 0; i < n; i++)
-			System.out.print('-');
-		System.out.println("");
-	}
-
-	static public String readString() {
+	public static String readString() {
 		try {
 			return in.nextLine();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static void ligne(int n) {
+		for (int i = 0; i < n; i++)
+			System.out.print('-');
+		System.out.println("");
+	}
+
+	public static void espace(int n) {
+		for (int i = 0; i < n; i++)
+			System.out.print(' ');
+	}
+
+	public static void efface() {
+		System.out.println("\033c");
+	}
+
+	public static void enTete(String txt) {
+		efface();
+		ligne(70);
+		espace((70 / 2) - (txt.length() / 2));
+		System.out.println(txt);
+		ligne(70);
+	}
+
+	public static void enTete2(String txt) {
+		efface();
+		ligne(70);
+		espace((70 / 2) - (txt.length() / 2));
+		System.out.println(txt);
+		ligne(70);
 	}
 
 	static public float readFloat() {

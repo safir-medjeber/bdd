@@ -97,15 +97,15 @@ public class ConnectionBase {
 		insertCompte.executeUpdate();
 	}
 
-	public void selectionCritere(String lieu, String prix, String surface,
-			String nbPiece, String prestation, boolean aucunCrit)
-			throws SQLException {
-
+	public void selectionCritere(String lieu, String prix,
+			String surface, String nbPiece, String prestation, 
+			String dates, boolean aucunCrit)
+					throws SQLException {
 		selectCritere = connection.createStatement();
 		String cmd = "";
 		if (aucunCrit == true) {
-			cmd = "SELECT * FROM Logement";
-			selectCritere.execute(cmd);
+			cmd = "SELECT description, type, surface, nb_pieces, prix , ville FROM Logement LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse";
+			Interface.printLogement(selectCritere.executeQuery(cmd));
 		}
 		if (lieu != "") {
 			String[] decoup;
@@ -128,7 +128,7 @@ public class ConnectionBase {
 			selectCritere.execute(cmd);
 		}
 		if (nbPiece != "") {
-			cmd = "SELECT * FROM Logemen WHERE nbPiece=" + nbPiece;
+			cmd = "SELECT * FROM Logement WHERE nbPiece="+nbPiece;
 			selectCritere.execute(cmd);
 		}
 

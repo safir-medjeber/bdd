@@ -3,13 +3,28 @@ import java.sql.SQLException;
 public class InterfaceConnecte {
 	public static final int CHAMBRE = 1, APPART = 0;
 
+
+	public static void testeConnection() throws SQLException{
+		System.out.print("login: ");
+		String login = Interface.readString();
+		String password = PasswordField.readPassword("password for " + login + ": ");
+		if (Interface.connection.connecteCompte(login, password)) {
+			printConnecter();
+			int choice = Interface.readInt();
+			evalConnecte(choice, login);
+		} 
+		else
+			System.out.println("Erreur dans l'identifiant ou le mot de passe");
+	}
+
+
 	public static void printConnecter() {
 		System.out.println("Veuillez entrez votre choix : ");
 		System.out.println("------------------------------");
 		System.out.println("0 - Fin");
 		System.out.println("1 - Voir mes appartements");
 		System.out.println("2 - Modifier un appartement");
-		System.out.println("2 - Ajouter un appartement");
+		System.out.println("3 - Ajouter un appartement");
 		System.out.println("------------------------------");
 
 	}

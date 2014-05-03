@@ -1,9 +1,7 @@
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 public class Interface {
-	static Scanner in = new Scanner(System.in);
 	static ConnectionBase connection;
 
 	public static void main(String[] args) {
@@ -15,10 +13,7 @@ public class Interface {
 					.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
 			connection = new ConnectionBase(args[0], password);
 
-
 			MenuPrincipal();
-
-			
 
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -30,24 +25,19 @@ public class Interface {
 		int choix;
 
 		enTete("AirChambreDhotes");
-		System.out.println("0 - Quitter l'application");
+		System.out.println("0 - Retour au menu");
 		System.out.println("1 - Effectuer une recherche");
 		System.out.println("2 - Se connecter");
 		System.out.println("3 - S'inscrire");
 		ligne(70);
-		choix = readInt();
+		choix = ReadTools.readInt();
 		evalMenu(choix);
 	}
 
 	public static void evalMenu(int choice) throws SQLException {
-		String login, password;
-		String choixCrit;
 		switch (choice) {
-
 		case 0:
-			System.exit(0);
-			break;
-
+			return;
 		case 1:
 			InterfaceRecherche.listeCritere();
 			break;
@@ -64,7 +54,14 @@ public class Interface {
 	}
 
 	public static void printLogement(ResultSet set) throws SQLException {
+		printLogement(set, false);
+	}
+
+	public static void printLogement(ResultSet set, boolean withId)
+			throws SQLException {
 		while (set != null && set.next()) {
+			if (withId)
+				System.out.println(("ID - " + set.getInt("idLogement")));
 			System.out
 					.println("Description\t: " + set.getString("description"));
 			System.out.println("Type\t\t: " + set.getString("type"));
@@ -82,25 +79,6 @@ public class Interface {
 				.println("Veuillez entrer votre nom identifiant pour Postgres.");
 		System.out.println("usage : java Interface <nomUtilisateur>");
 		System.exit(1);
-	}
-
-	public static int readInt() {
-		try {
-			String s = in.nextLine();
-			return Integer.parseInt(s);
-		} catch (Exception e) {
-			System.out.print(" ↳ Entrez un nombre: ");
-			return readInt();
-		}
-	}
-
-	public static String readString() {
-		try {
-			return in.nextLine();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 	public static void ligne(int n) {
@@ -132,15 +110,5 @@ public class Interface {
 		espace((70 / 2) - (txt.length() / 2));
 		System.out.println(txt);
 		ligne(70);
-	}
-
-	static public float readFloat() {
-		try {
-			String s = in.nextLine();
-			return Float.parseFloat(s);
-		} catch (Exception e) {
-			System.out.print(" ↳ Entrez un nombre: ");
-			return readInt();
-		}
 	}
 }

@@ -9,7 +9,7 @@ public class InterfaceInscription {
 		
 		n = getPerson();
 		System.out.print("login: ");
-		login = Interface.readString();
+		login = ReadTools.readString();
 		password = PasswordField.readPassword("password: ");
 		Interface.connection.insertCompte(login, password, n);
 	}
@@ -19,11 +19,11 @@ public class InterfaceInscription {
 		int adresse;
 
 		System.out.print("Nom: ");
-		nom = Interface.readString();
+		nom = ReadTools.readString();
 		System.out.print("Prenom: ");
-		prenom = Interface.readString();
+		prenom = ReadTools.readString();
 		System.out.print("Mail: ");
-		mail = Interface.readString();
+		mail = ReadTools.readString();
 		adresse = getAddr();
 
 		return Interface.connection.insertPerson(nom, prenom, mail, adresse);
@@ -33,15 +33,15 @@ public class InterfaceInscription {
 		String pays, cp, ville, rue;
 		int numero;
 		System.out.print("Pays: ");
-		pays = Interface.readString();
+		pays = ReadTools.readString();
 		System.out.print("Code Postal: ");
-		cp = Interface.readString();
+		cp = ReadTools.readString();
 		System.out.print("Ville: ");
-		ville = Interface.readString();
+		ville = ReadTools.readString();
 		System.out.print("Numero: ");
-		numero = Interface.readInt();
+		numero = ReadTools.readInt();
 		System.out.print("Rue: ");
-		rue = Interface.readString();
+		rue = ReadTools.readString();
 
 		return Interface.connection.insertAdresse(pays, cp, numero, rue, ville);
 	}

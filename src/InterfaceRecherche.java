@@ -1,8 +1,4 @@
-import java.sql.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Scanner;
-
 
 public class InterfaceRecherche {
 
@@ -21,10 +17,10 @@ public class InterfaceRecherche {
 		System.out.println("7 - Aucun");
 		Interface.ligne(70);
 
-		choix = Interface.readString();
+		choix = ReadTools.readString();
 		while(testEntreeMenu(choix, 7)==false){
 			System.out.println(" ↳ Entrer une requete de la forme: 1 3 5");
-			choix = Interface.readString();
+			choix = ReadTools.readString();
 		}
 		Interface.efface();
 		evalChoixCrit(choix);
@@ -53,10 +49,10 @@ public class InterfaceRecherche {
 				Interface.enTete2("Specification d'une ou plusieurs ville(s)");
 				System.out.println("0 - Usage");
 				Interface.ligne(70);
-				lieu=Interface.readString();
+				lieu=ReadTools.readString();
 				if(testEntreeMenu(lieu, 1)==true){
 					System.out.println(" ↳ Entrer une requete de la forme: Paris, Lyon, Bordeaux ");
-					lieu=Interface.readString();
+					lieu=ReadTools.readString();
 				}
 				break;
 
@@ -65,11 +61,11 @@ public class InterfaceRecherche {
 				System.out.println("0 - Usage");
 				Interface.ligne(70);
 
-				prix=Interface.readString();
+				prix=ReadTools.readString();
 
 				while(testEntreeInterval(prix)==false){
 					System.out.println(" ↳ Entrer une requete de la forme: >200 ou <300 ou =400 ou >140 <200");
-					prix=Interface.readString();
+					prix=ReadTools.readString();
 				}
 				break;
 
@@ -79,11 +75,11 @@ public class InterfaceRecherche {
 				System.out.println("0 - Usage");
 				Interface.ligne(70);
 
-				surface=Interface.readString();
+				surface=ReadTools.readString();
 
 				while(testEntreeInterval(surface)==false){
 					System.out.println(" ↳ Entrer une requete de la forme: >20 ou <40 ou =45 ou >20 <50");
-					surface=Interface.readString();
+					surface=ReadTools.readString();
 				}
 				break;
 
@@ -92,11 +88,11 @@ public class InterfaceRecherche {
 				System.out.println("0 - Usage");
 				Interface.ligne(70);
 
-				nbPiece=Interface.readString();
+				nbPiece=ReadTools.readString();
 
 				while(testEntreeInterval(nbPiece)==false){
 					System.out.println(" ↳ Entrer une requete de la forme: >2 ou <4 ou =5 ou >5 <8");
-					nbPiece=Interface.readString();
+					nbPiece=ReadTools.readString();
 				}
 				break;
 
@@ -109,7 +105,7 @@ public class InterfaceRecherche {
 				Interface.ligne(70);
 				while(testEntreeMenu(choix, 3)==false){
 					System.out.println(" ↳ Entrer une requete de la forme: 0 3");
-					prestation= Interface.readString();
+					prestation= ReadTools.readString();
 				}
 				prestation = evalPrestation(prestation);
 				break;
@@ -119,11 +115,11 @@ public class InterfaceRecherche {
 				System.out.println("0 - Usage");
 				Interface.ligne(70);
 
-				dates=Interface.readString();
+				dates=ReadTools.readString();
 
 				while(testDateFormat(dates)==false){
 					System.out.println(" ↳ Entrer une requete de la forme: yyyy-MM-dd   yyyy-MM-dd");
-					dates=Interface.readString();
+					dates=ReadTools.readString();
 				}
 				break;
 			case 7:
@@ -160,10 +156,10 @@ public class InterfaceRecherche {
 				Interface.enTete2("Specification d'une ou plusieurs visites");
 				System.out.println("0 - Usage");
 				Interface.ligne(70);
-				visites=Interface.readString();
+				visites=ReadTools.readString();
 				if(testEntreeMenu(visites, 1)==true){
 					System.out.println(" ↳ Entrer une requete de la forme: Louvres, Tour Eiffel, ");
-					visites=Interface.readString();
+					visites=ReadTools.readString();
 				}
 				prestation+=visites;
 				break;

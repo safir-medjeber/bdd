@@ -1,4 +1,3 @@
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -40,7 +39,44 @@ public class InterfaceConnection {
 		case 1:
 			Interface.printLogement(Interface.connection.selectAppartement(login));
 			break;
+		case 2: 
+			getAppartement(login);
+			break;
+		default:
+			System.out.println("Erreur");
 		}
+	}
+
+	private static void getAppartement(String login) throws SQLException {
+		String description;
+		int nbPieces, nbChambres = 1, type;
+		float surface, prix;
+		
+		System.out.print("Description: ");
+		description = Interface.readString();
+		System.out.println("Type d'appartement: ");
+		System.out.println("0 - Appartement");
+		System.out.println("1 - Chambre d'hotes");
+		type = Interface.readInt();
+		while(type < 0 || type > 1){
+			System.out.println("Entrer un nombre entre 0 et 1");
+			type = Interface.readInt();
+		}
+		if(type == 1){
+			System.out.print("Nombre chambres: ");
+			nbChambres = Interface.readInt();
+		}
+		System.out.println("Prix: ");
+		prix = Interface.readFloat();
+		System.out.println("Surface: ");
+		surface = Interface.readFloat();
+		System.out.println("Nombre de pieces: ");
+		nbPieces = Interface.readInt();
+	
+		System.out.println("--- Adresse ---");
+		int n = InterfaceInscription.getAddr();
+
+		Interface.connection.insertAppart(description, type, nbChambres, surface, nbPieces, prix, n, login);
 	}
 
 }

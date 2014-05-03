@@ -82,7 +82,7 @@ CREATE TABLE Reservation(
 CREATE TABLE Transport(
        ville varchar(64),
        nb_vehicule_libre integer,
-       prix money,
+       prix real,
        PRIMARY KEY(ville),
        FOREIGN KEY(ville) REFERENCES Ville(ville)
 );
@@ -124,7 +124,7 @@ CREATE TABLE Photo(
 CREATE TABLE Prestation(
        idPrestation serial,
        prestation varchar(32),
-       prix money,
+       prix real,
        idLogement  integer,
        PRIMARY KEY(idPrestation),
        FOREIGN KEY(idLogement) REFERENCES Logement(idLogement)
@@ -154,7 +154,7 @@ CREATE TABLE Reduction_periode(
 CREATE TABLE Facture(
        idFacture serial,
        dateFacture timestamp,		
-       montant money, 
+       montant real, 
        idPayeur integer,
        idLoueur integer,
        idReservation integer,	

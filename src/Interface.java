@@ -59,11 +59,7 @@ public class Interface {
 			InterfaceConnection.testeConnection();
 			break;
 		case 3:
-			int n = InterfaceInscription.getPerson();
-			System.out.print("login: ");
-			login = readString();
-			password = PasswordField.readPassword("password: ");
-			connection.insertCompte(login, password, n);
+			InterfaceInscription.getCompte();
 			break;
 		default:
 			System.out.println("Erreur");
@@ -111,6 +107,7 @@ public class Interface {
 		}
 	}
 
+<<<<<<< HEAD
 
 
 	public static void ligne(int n) {
@@ -148,4 +145,15 @@ public class Interface {
 
 
 
+=======
+	static public float readFloat(){
+		try {
+			String s = in.nextLine();
+			return Float.parseFloat(s);
+		} catch (Exception e) {
+			System.out.print(" ↳ Entrez un nombre: ");
+					return readInt();
+		}
+	}
+>>>>>>> 6eaaa869cbaf8aa8101ec8c662a7f6fab402b434
 }

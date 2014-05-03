@@ -9,7 +9,7 @@ public class ConnectionBase {
 
 	private Connection connection;
 	private PreparedStatement selectCompte, selectVille, insertVille,
-	insertAdresse, insertPerson, insertCompte, selectAppart;
+	insertAdresse, insertPerson, insertCompte, selectAppart, insertAppart;
 	static Statement selectCritere;
 
 	public ConnectionBase(String user, String password) throws SQLException {
@@ -36,8 +36,11 @@ public class ConnectionBase {
 		String insertCompteQuery = "INSERT INTO Compte (login, password, idPersonne) VALUES (?,?,?)";
 		insertCompte = connection.prepareStatement(insertCompteQuery);
 
-		String selectAppartQuery = "SELECT description, type, surface, nb_pieces, prix, ville FROM Logement LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse";
+		String selectAppartQuery = "SELECT description, type, surface, nb_pieces, prix, ville FROM Logement LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse WHERE login=?";
 		selectAppart = connection.prepareStatement(selectAppartQuery);
+	
+		String insertAppartQuery = "INSERT INTO Logement (Description, type, surface, nb_pieces, prix, idAdresse, login) VALUES (?,?,?,?,?,?,?)";
+		insertAppart = connection.prepareStatement(insertAppartQuery);
 	}
 
 	public void close() throws SQLException {
@@ -146,7 +149,22 @@ public class ConnectionBase {
 	}
 
 	public ResultSet selectAppartement(String login) throws SQLException {
+		selectAppart.setString(1, login);
+		
 		return selectAppart.executeQuery();
+	}
+
+	public void insertAppart(String description, int type, int nbChambres,
+			float surface, int nbPieces, float prix, int idAdresse, String login) throws SQLException {
+		insertAppart.setString(1, description);
+		insertAppart.setInt(2, type);
+		insertAppart.setFloat(3, surface);
+		insertAppart.setInt(4, nbPieces);
+		insertAppart.setFloat(5, prix);
+		insertAppart.setInt(6, idAdresse);
+		insertAppart.setString(7, login);
+		
+		insertAppart.executeUpdate();
 	}
 
 }

@@ -8,59 +8,55 @@ public class Interface {
 
 	public static void main(String[] args) {
 		int choix;
-		if (args.length != 1)
+		if (args.length != 2)
 			usage();
 
 		try {
-			String password = PasswordField.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
-			connection = new ConnectionBase(args[0], password);
+			//String password = PasswordField.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
+			connection = new ConnectionBase(args[0], args[1]);
 
-			printMenu();
+			MenuPrincipal();
 
-			choix = readInt();
-			evalMenu(choix);
+			
 
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
 	}
 
-	public static void printMenu() {
-		System.out.println("Veuillez entrez votre choix : ");
-		System.out.println("------------------------------");
-		System.out.println("0 - Fin");
+
+
+	public static void MenuPrincipal() throws SQLException {
+		
+		int choix;
+		
+		enTete("AirChambreDhotes");
+		System.out.println("0 - Quitter l'application");
 		System.out.println("1 - Effectuer une recherche");
 		System.out.println("2 - Se connecter");
 		System.out.println("3 - S'inscrire");
-		System.out.println("------------------------------");
+		ligne(70);
+		choix = readInt();
+		evalMenu(choix);
 	}
+
+
 
 	public static void evalMenu(int choice) throws SQLException {
 		String login, password;
 		String choixCrit;
 		switch (choice) {
+		
 		case 0:
 			System.exit(0);
 			break;
+		
 		case 1:
-			InterfaceRecherche.printListeCritere();
-			choixCrit = readString();
-			InterfaceRecherche.evalChoixCrit(choixCrit);
+			InterfaceRecherche.listeCritere();
 			break;
 
 		case 2:
-			System.out.print("login: ");
-			login = readString();
-			password = PasswordField.readPassword("password for " + login
-					+ ": ");
-			// password = "QCX87SQJ7WX"; //TODO
-			if (connection.connecteCompte(login, password)) {
-				InterfaceConnecte.printConnecter();
-				choice = readInt();
-				InterfaceConnecte.evalConnecte(choice, login);
-			} else
-				System.out
-						.println("Erreur dans l'identifiant ou le mot de passe");
+			InterfaceConnection.testeConnection();
 			break;
 		case 3:
 			int n = InterfaceInscription.getPerson();
@@ -73,7 +69,7 @@ public class Interface {
 			System.out.println("Erreur");
 		}
 	}
-	
+
 	public static void printLogement(ResultSet set) throws SQLException {
 		while (set != null && set.next()) {
 			System.out.println("Description\t: " + set.getString("description"));
@@ -88,7 +84,7 @@ public class Interface {
 
 	public static void usage() {
 		System.out
-				.println("Veuillez entrer votre nom identifiant pour Postgres.");
+		.println("Veuillez entrer votre nom identifiant pour Postgres.");
 		System.out.println("usage : java Interface <nomUtilisateur>");
 		System.exit(1);
 	}
@@ -99,17 +95,14 @@ public class Interface {
 			return Integer.parseInt(s);
 		} catch (Exception e) {
 			System.out.print(" ↳ Entrez un nombre: ");
-					return readInt();
+			return readInt();
 		}
 	}
 
-	public static void ligne(int n) {
-		for(int i = 0; i < n; i++)
-			System.out.print('-');
-		System.out.println("");
-	}
 
-	static public String readString() {
+
+
+	public static  String readString() {
 		try {
 			return in.nextLine();
 		} catch (Exception e) {
@@ -118,10 +111,41 @@ public class Interface {
 		}
 	}
 
-	public static void print(String s, int i) {
-		System.out.print(s);
-		for (i -= s.length(); i >= 0; i--)
-			System.out.print(" ");
+
+
+	public static void ligne(int n) {
+		for(int i = 0; i < n; i++)
+			System.out.print('-');
+		System.out.println("");
 	}
+
+	public static void espace(int n) {
+		for(int i = 0; i < n; i++)
+			System.out.print(' ');
+	}
+
+	public static void efface() {
+		System.out.println("\033c");	
+	}
+
+
+	public static void enTete(String txt){
+		efface();
+		ligne(70);	
+		espace((70/2)-(txt.length()/2));
+		System.out.println(txt);
+		ligne(70);
+	}
+
+
+	public static void enTete2(String txt){
+		efface();
+		ligne(70);	
+		espace((70/2)-(txt.length()/2));
+		System.out.println(txt);
+		ligne(70);
+	}
+
+
 
 }

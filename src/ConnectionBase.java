@@ -8,16 +8,16 @@ import java.sql.Date;
 
 public class ConnectionBase {
 
-	private Connection connection;
+	static Connection connection;
 	private PreparedStatement selectCompte, selectVille, insertVille,
 			insertAdresse, insertPerson, insertCompte, selectAppart,
 			insertAppart, insertPrestation, insertPhoto, insertReduction,
 			insertDureeReduction, insertPeriodeReduction;
 	static Statement selectCritere;
-
+	
+	
 	public ConnectionBase(String user, String password) throws SQLException {
-		connection = DriverManager.getConnection(
-				"jdbc:postgresql://localhost:5432/base", user, "base");
+		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/base", user, "base");
 
 		String connectionQuery = "SELECT login FROM Compte WHERE login=? AND password=?";
 		selectCompte = connection.prepareStatement(connectionQuery);
@@ -111,52 +111,7 @@ public class ConnectionBase {
 		insertCompte.executeUpdate();
 	}
 
-	public void selectionCritere(String lieu, String prix, String surface,
-			String nbPiece, String prestation, String dates, boolean aucunCrit)
-			throws SQLException {
-		selectCritere = connection.createStatement();
-		String cmd = "";
-		if (aucunCrit == true) {
-			cmd = "SELECT description, type, surface, nb_pieces, prix , ville FROM Logement LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse";
-			Interface.printLogement(selectCritere.executeQuery(cmd));
-		}
-		if (lieu != "") {
-			String[] decoup;
-			decoup = lieu.split(",");
-			for (int i = 0; i < decoup.length; i++) {
-				cmd = "SELECT description, type, surface, nb_pieces, prix, ville FROM Logement "
-						+ "LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse WHERE Adresse.ville='"
-						+ decoup[i] + "'";
-				selectCritere.execute(cmd);
-
-			}
-		}
-
-		if (prix != "") {
-			cmd = "SELECT * FROM Logement WHERE prix=" + prix;
-			selectCritere.execute(cmd);
-		}
-		if (surface != "") {
-			cmd = "SELECT * FROM Logement WHERE surface=" + surface;
-			selectCritere.execute(cmd);
-		}
-		if (nbPiece != "") {
-			cmd = "SELECT * FROM Logement WHERE nbPiece=" + nbPiece;
-			selectCritere.execute(cmd);
-		}
-
-		if (prestation != "") {
-			String[] decoup;
-			decoup = lieu.split(",");
-			for (int i = 0; i < decoup.length; i++) {
-				cmd = "SELECT * FROM Logement WHERE Adresse.ville='"
-						+ decoup[i] + "'";
-				selectCritere.execute(cmd);
-			}
-		}
-
-	}
-
+	
 	public ResultSet selectAppartement(String login) throws SQLException {
 		selectAppart.setString(1, login);
 
@@ -165,7 +120,7 @@ public class ConnectionBase {
 
 	public int[] insertAppart(String description, int type, int nbChambres,
 			float surface, int nbPieces, float prix, int idAdresse, String login)
-			throws SQLException {
+					throws SQLException {
 		String s = "";
 		int[] t = new int[nbChambres];
 

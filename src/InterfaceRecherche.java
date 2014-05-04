@@ -117,7 +117,7 @@ public class InterfaceRecherche {
 				System.out.println("0 - Petit Dejeuner");
 				System.out.println("1 - Dejeuner");
 				System.out.println("2 - Diner");
-				System.out.println("3 - Visites proposees avec la location");
+				System.out.println("3 - Logement proposant des visites");
 				System.out.println("4 - Loisirs, activitees");
 
 				Interface.ligne(Interface.largeurEcran);
@@ -176,6 +176,7 @@ public class InterfaceRecherche {
 				break;
 			case 3:
 				prestation+="3, ";
+				break;
 			case 4:
 				Interface.enTete2("Specification de vos loisirs, activites");
 				System.out.println("0 - Usage");
@@ -196,7 +197,7 @@ public class InterfaceRecherche {
 
 	public static boolean isEntier(String s) {
 		try {
-			int i = Integer.parseInt(s);
+			Integer.parseInt(s);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -207,7 +208,7 @@ public class InterfaceRecherche {
 	
 	public static boolean isFloat(String s) {
 		try {
-			double i = Float.parseFloat(s);
+			Float.parseFloat(s);
 			return true;
 		} catch (Exception e) {
 			return false;

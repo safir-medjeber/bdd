@@ -77,7 +77,7 @@ public class Interface {
 	}
 
 	public static void efface() {
-		System.out.println("\033c");
+		System.out.print("\033c");
 	}
 
 	public static void enTete(String txt) {

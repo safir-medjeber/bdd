@@ -68,7 +68,7 @@ public class ReadTools {
 			String s;
 			String[] tab;
 			int day, month, year;
-			System.out.println("Entrer une date : (JJ/MM/AA)");
+			//System.out.println("Entrer une date : (JJ/MM/AA)");
 			s = readString();
 			if (empty && s.length() == 0)
 				return null;

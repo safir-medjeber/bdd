@@ -14,6 +14,11 @@ public class RechercheInBase {
 			String nbPiece, String prestation, Date d1, Date d2, 
 			boolean transport, boolean aucunCrit) throws SQLException {
 
+		String cmdbase = "SELECT description, type, surface, nb_pieces, logement.prix , adresse.ville , logement.idlogement FROM Logement " +
+				"LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse ";
+
+		String where=" WHERE ";
+
 
 		String[] decoup;
 		selectCritere = ConnectionBase.connection.createStatement();
@@ -24,65 +29,96 @@ public class RechercheInBase {
 			Printer.printLogement(selectCritere.executeQuery(cmd));
 		}
 
+		if (transport == true) {
+			String cmdTrans = cmdbase+"RIGHT JOIN Transport on Transport.ville=Adresse.ville";
+			System.out.println(cmdTrans);
+			Printer.printLogement(selectCritere.executeQuery(cmdTrans));
+		}
 
-		cmd+= " WHERE ";
+		else{
 
-		System.out.println(nbPiece);
-		if (lieu != "") {
-			decoup = lieu.split(" *, * ");
-			for (int i = 0; i < decoup.length; i++) {
-				cmd += " Adresse.ville='"+ decoup[i] + "' OR "	;
+			if (lieu != "") {
+				decoup = lieu.split(" *, * ");
+				where+="(";
+				for (int i = 0; i < decoup.length; i++) {
+					where += " Adresse.ville='"+ decoup[i] + "' OR "	;
+				}
+				where+=")";
+
 			}
+
+			if (prix != "") {
+				where+="(";
+
+				decoup = prix.split(" * ");
+				where+= parseInterval(decoup, "prix");
+				where+=")";
+
+			}
+
+			if (typeLocation != "") {
+				where+="(";
+
+				decoup = typeLocation.split(" * ");
+				where+= parseType(decoup);	
+				where+=")";
+
+			}
+
+			if (surface != "") {
+				where+="(";
+				decoup = surface.split(" * ");
+				where+= parseInterval(decoup, "surface");
+				where+=")";
+
+			}
+
+
+			if (nbPiece != "") {
+				where+="(";
+				decoup = nbPiece.split(" * ");
+				where+= parseInterval(decoup, "nb_pieces");	
+				where+=")";
+
+			}
+
+
+
+
+			if (prestation != "") {
+				decoup = prestation.split(" *, * ");
+				String presta= parsePrestation(decoup);
+				String cmdPresta=cmdbase+"LEFT JOIN Prestation on Prestation.idlogement=Logement.idlogement "+
+						"WHERE "+ presta;
+				cmdPresta=cmdPresta.substring(0,cmdPresta.length()-4);
+				System.out.println(cmdPresta+"\n\n");
+				Printer.printLogement(selectCritere.executeQuery(cmdPresta));
+
+			}
+
+
+			if(d1!=null && d2!=null){
+				String cmdDate=cmd+
+						"LEFT JOIN Disponibilite on Logement.idlogement=Disponibilite.idlogement "+
+						"WHERE jour<'"+d1+ "' OR jour>'"+d2+"'";
+				System.out.println(cmdDate+"\n\n");
+				//	Printer.printLogement(selectCritere.executeQuery(cmdDate));
+
+			}
+
+
+			cmd=cmd.substring(0,cmd.length()-4);
+			//System.out.println(cmd);
+
+			//Printer.printLogement(selectCritere.executeQuery(cmd));
+
+
+			if(!(where.equals(" WHERE "))){
+				cmdbase = cmdbase+=where;
+				
+			}
+
 		}
-
-		if (prix != "") {
-			decoup = prix.split(" * ");
-			cmd+= parseInterval(decoup, "prix");		
-		}
-
-		if (prix != "") {
-			decoup = prix.split(" * ");
-			cmd+= parseInterval(decoup, "prix");		
-		}
-
-		if (typeLocation != "") {
-			System.out.println("pk");
-			decoup = typeLocation.split(" * ");
-			cmd+= parseType(decoup);		
-		}
-
-		if (surface != "") {
-			decoup = surface.split(" * ");
-			cmd+= parseInterval(decoup, "surface");	
-		}
-
-
-		if (nbPiece != "") {
-			decoup = nbPiece.split(" * ");
-			cmd+= parseInterval(decoup, "nb_pieces");	
-		}
-
-		if (prestation != "") {
-			decoup = lieu.split(" *, *");
-		}
-
-
-		if(d1!=null && d2!=null){
-			String cmdDate="SELECT description, type, surface, nb_pieces, prix , ville FROM Logement "+
-					"LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse "+
-					"LEFT JOIN Disponibilite on Logement.idlogement=Disponibilite.idlogement "+
-					"WHERE jour<'"+d1+ "' OR jour>'"+d2+"'";
-			System.out.println(cmdDate);
-		//	Printer.printLogement(selectCritere.executeQuery(cmdDate));
-
-		}
-		
-		
-		cmd=cmd.substring(0,cmd.length()-4);
-		System.out.println(cmd);
-
-		Printer.printLogement(selectCritere.executeQuery(cmd));
-
 	}
 
 
@@ -111,11 +147,19 @@ public class RechercheInBase {
 		for (int i = 0; i < decoup.length; i++) {
 			if(decoup[i].equals("0"))
 				cmd+= "type='Appartement' OR ";
-		
+
 			if(decoup[i].equals("1"))
 				cmd+= "type='Chambre' OR "; 
-			System.out.println(cmd + "lol" + decoup[i]+"m");
+		}
+		return cmd;
+
 	}
+
+	public static String parsePrestation(String[] decoup){
+		String cmd="";
+		for (int i = 0; i < decoup.length; i++) {
+			cmd+= "prestation='" +decoup[i]+ "' OR "; 
+		}
 		return cmd;
 
 	}

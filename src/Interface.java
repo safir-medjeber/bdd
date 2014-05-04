@@ -4,39 +4,39 @@ import java.sql.SQLException;
 public class Interface {
 	static ConnectionBase connection;
 	static int largeurEcran = 70;
-	
+
 	public static void main(String[] args) {
 		if (args.length != 2)
 			usage();
 
 		try {
-		//	String password = PasswordField.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
+			// String password =
+			// PasswordField.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
 			connection = new ConnectionBase(args[0], args[1]);
-
-			MenuPrincipal();
+			menuPrincipal();
 
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
 	}
 
-	public static void MenuPrincipal() throws SQLException {
+	public static void menuPrincipal() throws SQLException {
 
 		int choix;
 
-		enTete("AirChambreDhotes");
-		System.out.println("0 - Retour au menu");
-		System.out.println("1 - Effectuer une recherche");
-		System.out.println("2 - Se connecter");
-		System.out.println("3 - S'inscrire");
+			enTete("AirChambreDhotes");
+			System.out.println("0 - Fin");
+			System.out.println("1 - Effectuer une recherche");
+			System.out.println("2 - Se connecter");
+			System.out.println("3 - S'inscrire");
 
-		ligne(largeurEcran);
-		choix = ReadTools.readInt();
-		while(choix > 3){
-			System.out.print(" ↳ Entrez un nombre: ");
-			choix = ReadTools.readInt();			
-		}
-		evalMenu(choix);
+			ligne(largeurEcran);
+			choix = ReadTools.readInt();
+			while (choix < 0 && choix > 3) {
+				System.out.print(" ↳ Entrez un nombre: ");
+				choix = ReadTools.readInt();
+			}
+			evalMenu(choix);
 	}
 
 	public static void evalMenu(int choice) throws SQLException {
@@ -46,7 +46,6 @@ public class Interface {
 		case 1:
 			InterfaceRecherche.listeCritere();
 			break;
-
 		case 2:
 			InterfaceConnecte.testeConnection();
 			break;
@@ -56,27 +55,7 @@ public class Interface {
 		default:
 			System.out.println("Erreur");
 		}
-	}
-
-	public static void printLogement(ResultSet set) throws SQLException {
-		printLogement(set, false);
-	}
-
-	public static void printLogement(ResultSet set, boolean withId)
-			throws SQLException {
-		while (set != null && set.next()) {
-			if (withId)
-				System.out.println(("ID - " + set.getInt("idLogement")));
-			System.out
-					.println("Description\t: " + set.getString("description"));
-			System.out.println("Type\t\t: " + set.getString("type"));
-			System.out.println("Surface\t\t: " + set.getFloat("surface"));
-			System.out
-					.println("Nbr de pieces\t: " + set.getString("nb_pieces"));
-			System.out.println("Prix\t\t: " + set.getFloat("prix"));
-			System.out.println("Situe a\t\t: " + set.getString("ville"));
-			Interface.ligne(30);
-		}
+		menuPrincipal();
 	}
 
 	public static void usage() {

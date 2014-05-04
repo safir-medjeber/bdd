@@ -70,6 +70,10 @@ public class Interface {
 			System.out.print('-');
 		System.out.println("");
 	}
+	
+	public static void ligne(){
+		ligne(largeurEcran);
+	}
 
 	public static void espace(int n) {
 		for (int i = 0; i < n; i++)

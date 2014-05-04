@@ -20,14 +20,13 @@ public class InterfaceConnecte {
 	public static void printConnecter(String login) throws SQLException {
 		int choix;
 
-		System.out.println("Veuillez entrez votre choix : ");
-		System.out.println("------------------------------");
+		Interface.enTete("Bienvenue " + login);
 		System.out.println("0 - Retour au menu");
 		System.out.println("1 - Voir mes appartements");
 		System.out.println("2 - Modifier un appartement");
 		System.out.println("3 - Ajouter un appartement");
-		System.out.println("------------------------------");
-
+		Interface.ligne();
+		
 		choix = ReadTools.readInt();
 		evalConnecte(choix, login);
 	}
@@ -55,10 +54,9 @@ public class InterfaceConnecte {
 
 	private static void modifAppart(String login) throws SQLException {
 		int logement;
-		System.out.println("Entrer le numero du logement que voulez modifiez");
-		System.out.println("(-1 pour annuler) ");
+		System.out.println("Entrer le numero du logement que voulez modifiez (ou ↵)");
 
-		logement = ReadTools.readInt();
+		logement = ReadTools.readEmptyInt();
 		if (logement == -1)
 			return;
 		if (Interface.connection.selectAppartement(login, logement)) {
@@ -130,8 +128,8 @@ public class InterfaceConnecte {
 		Printer.printReductionDuree(dureeSet);
 		Printer.printReductionPeriode(periodeSet);
 
-		System.out.print("Entrer l'id à supprimer (ou -1): ");
-		id = ReadTools.readInt();
+		System.out.print("Entrer l'id à supprimer (ou ↵): ");
+		id = ReadTools.readEmptyInt();
 		if (id != -1)
 			Interface.connection.delReduction(id);
 	}
@@ -141,8 +139,8 @@ public class InterfaceConnecte {
 		ResultSet photoSet = Interface.connection.selectPhotoOf(logement);
 		
 		Printer.printPhoto(photoSet);
-		System.out.print("Entrer l'id à supprimer (ou -1): ");
-		id = ReadTools.readInt();
+		System.out.print("Entrer l'id à supprimer (ou ↵): ");
+		id = ReadTools.readEmptyInt();
 		if (id != -1)
 			Interface.connection.delPhoto(id);
 	}
@@ -155,7 +153,7 @@ public class InterfaceConnecte {
 
 		Printer.printPrestation(prestationSet);
 
-		System.out.print("Entrer l'id à supprimer (ou -1): ");
+		System.out.print("Entrer l'id à supprimer (ou : ");
 		id = ReadTools.readInt();
 		if (id != -1)
 			Interface.connection.delPrestation(id);
@@ -188,7 +186,6 @@ public class InterfaceConnecte {
 		System.out.print("Nombre de pieces: ");
 		nbPieces = ReadTools.readInt();
 
-		System.out.println("--- Adresse ---");
 		int n = InterfaceInscription.getAddr();
 
 		appart = Interface.connection.insertAppart(description, type,
@@ -199,7 +196,7 @@ public class InterfaceConnecte {
 	}
 
 	private static void printReduction() {
-		System.out.println("--- Ajouter des reductions ---");
+		Interface.enTete2("Ajouter des reductions");
 		System.out.println("↵ - Pour continuer");
 		System.out.println("0 - Sur la periode");
 		System.out.println("1 - Sur la duree");
@@ -246,7 +243,7 @@ public class InterfaceConnecte {
 
 	private static void addPhotos(int[] appart) throws SQLException {
 		String path;
-		System.out.println("------- Ajouter des photos -------");
+		Interface.enTete2("Ajouter des photos");
 		System.out.println("Entrer un lien de photo par ligne");
 		path = ReadTools.readString();
 		while (path.length() != 0) {
@@ -260,7 +257,7 @@ public class InterfaceConnecte {
 		String prestation;
 		float prix;
 
-		System.out.println("--- Ajouter des prestations ---");
+		Interface.enTete2("Ajouter des prestations");
 		System.out.println("↵ - Pour continuer");
 		System.out.println("0 - Petit-déjeuner");
 		System.out.println("1 - Repas");

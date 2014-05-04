@@ -10,56 +10,60 @@ public class ConnectionBase {
 
 	static Connection connection;
 	private PreparedStatement selectCompte, selectVille, insertVille,
-			insertAdresse, insertPerson, insertCompte, selectAppart,
-			insertAppart, insertPrestation, insertPhoto, insertReduction,
-			insertDureeReduction, insertPeriodeReduction;
+			insertAdresse, insertPerson, insertCompte, selectAppartByLogin,
+			selectAppartByLoginAndId, insertAppart, insertPrestation,
+			insertPhoto, insertReduction, insertDureeReduction,
+			insertPeriodeReduction;
 	static Statement selectCritere;
-	
-	
+
 	public ConnectionBase(String user, String password) throws SQLException {
-		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/base", user, "base");
+		connection = DriverManager.getConnection(
+				"jdbc:postgresql://localhost:5432/base", user, "base");
+		String query;
+		query = "SELECT login FROM Compte WHERE login=? AND password=?";
+		selectCompte = connection.prepareStatement(query);
 
-		String connectionQuery = "SELECT login FROM Compte WHERE login=? AND password=?";
-		selectCompte = connection.prepareStatement(connectionQuery);
+		query = "SELECT ville FROM Ville WHERE ville=?";
+		selectVille = connection.prepareStatement(query);
 
-		String selectVilleQuery = "SELECT ville FROM Ville WHERE ville=?";
-		selectVille = connection.prepareStatement(selectVilleQuery);
+		query = "INSERT INTO Ville (ville) VALUES (?)";
+		insertVille = connection.prepareStatement(query);
 
-		String insertVilleQuery = "INSERT INTO Ville (ville) VALUES (?)";
-		insertVille = connection.prepareStatement(insertVilleQuery);
-
-		String insertAdresseQuery = "INSERT INTO Adresse(pays,cp,numero,rue,ville) VALUES (?,?,?,?,?)";
-		insertAdresse = connection.prepareStatement(insertAdresseQuery,
+		query = "INSERT INTO Adresse(pays,cp,numero,rue,ville) VALUES (?,?,?,?,?)";
+		insertAdresse = connection.prepareStatement(query,
 				Statement.RETURN_GENERATED_KEYS);
 
-		String insertPersonQuery = "INSERT INTO Personne (nom, prenom, mail, idAdresse) VALUES (?,?,?,?)";
-		insertPerson = connection.prepareStatement(insertPersonQuery,
+		query = "INSERT INTO Personne (nom, prenom, mail, idAdresse) VALUES (?,?,?,?)";
+		insertPerson = connection.prepareStatement(query,
 				Statement.RETURN_GENERATED_KEYS);
 
-		String insertCompteQuery = "INSERT INTO Compte (login, password, idPersonne) VALUES (?,?,?)";
-		insertCompte = connection.prepareStatement(insertCompteQuery);
+		query = "INSERT INTO Compte (login, password, idPersonne) VALUES (?,?,?)";
+		insertCompte = connection.prepareStatement(query);
 
-		String selectAppartQuery = "SELECT idLogement, description, type, surface, nb_pieces, prix, ville FROM Logement LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse WHERE login=?";
-		selectAppart = connection.prepareStatement(selectAppartQuery);
+		query = "SELECT idLogement, description, type, surface, nb_pieces, prix, ville FROM Logement LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse WHERE login=?";
+		selectAppartByLogin = connection.prepareStatement(query);
 
-		String insertAppartQuery = "INSERT INTO Logement (Description, type, surface, nb_pieces, prix, idAdresse, login) VALUES (?,?,?,?,?,?,?)";
-		insertAppart = connection.prepareStatement(insertAppartQuery,
+		query = "SELECT idLogement FROM Logement LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse WHERE login=? AND idLogement=?";
+		selectAppartByLoginAndId = connection.prepareStatement(query);
+
+		query = "INSERT INTO Logement (Description, type, surface, nb_pieces, prix, idAdresse, login) VALUES (?,?,?,?,?,?,?)";
+		insertAppart = connection.prepareStatement(query,
 				Statement.RETURN_GENERATED_KEYS);
 
-		String insertPrestationQuery = "INSERT INTO Prestation (prestation, prix, idLogement) VALUES (?,?,?)";
-		insertPrestation = connection.prepareStatement(insertPrestationQuery);
+		query = "INSERT INTO Prestation (prestation, prix, idLogement) VALUES (?,?,?)";
+		insertPrestation = connection.prepareStatement(query);
 
-		String insertPhotoQuery = "INSERT INTO Photo (image, idLogement) VALUES (?,?)";
-		insertPhoto = connection.prepareStatement(insertPhotoQuery);
-		
-		String insertReductionQuery = "INSERT INTO Reduction (pourcentage, idLogement) VALUES (?,?)";
-		insertReduction = connection.prepareStatement(insertReductionQuery);
-		
-		String insertDureeReductionQuery = "INSERT INTO Reduction_duree (duree_min, idReduction) VALUES (?,?)";
-		insertDureeReduction = connection.prepareStatement(insertDureeReductionQuery);
-		
-		String insertPeriodeReductionQuery = "INSERT INTO Reduction_periode (debut, fin, idRecution) VALUES (?,?,?)";
-		insertPeriodeReduction = connection.prepareStatement(insertPeriodeReductionQuery);
+		query = "INSERT INTO Photo (image, idLogement) VALUES (?,?)";
+		insertPhoto = connection.prepareStatement(query);
+
+		query = "INSERT INTO Reduction (pourcentage, idLogement) VALUES (?,?)";
+		insertReduction = connection.prepareStatement(query);
+
+		query = "INSERT INTO Reduction_duree (duree_min, idReduction) VALUES (?,?)";
+		insertDureeReduction = connection.prepareStatement(query);
+
+		query = "INSERT INTO Reduction_periode (debut, fin, idReduction) VALUES (?,?,?)";
+		insertPeriodeReduction = connection.prepareStatement(query);
 	}
 
 	public void close() throws SQLException {
@@ -111,16 +115,23 @@ public class ConnectionBase {
 		insertCompte.executeUpdate();
 	}
 
-	
 	public ResultSet selectAppartement(String login) throws SQLException {
-		selectAppart.setString(1, login);
+		selectAppartByLogin.setString(1, login);
 
-		return selectAppart.executeQuery();
+		return selectAppartByLogin.executeQuery();
+	}
+
+	public boolean selectAppartement(String login, int logement)
+			throws SQLException {
+		selectAppartByLoginAndId.setString(1, login);
+		selectAppartByLoginAndId.setInt(2, logement);
+
+		return selectAppartByLoginAndId.executeQuery().next();
 	}
 
 	public int[] insertAppart(String description, int type, int nbChambres,
 			float surface, int nbPieces, float prix, int idAdresse, String login)
-					throws SQLException {
+			throws SQLException {
 		String s = "";
 		int[] t = new int[nbChambres];
 
@@ -156,32 +167,34 @@ public class ConnectionBase {
 		insertPhoto.executeUpdate();
 	}
 
-	private int insertReduction(int reduc, int appart) throws SQLException{
+	private int insertReduction(int reduc, int appart) throws SQLException {
 		insertReduction.setInt(1, reduc);
 		insertReduction.setInt(2, appart);
-		
-		return getGeneratedKey(insertDureeReduction);
+
+		return getGeneratedKey(insertReduction);
 	}
-	
-	public void insertPeriodeReduction(int i, int reduc, Date debut, Date fin) throws SQLException {
+
+	public void insertPeriodeReduction(int i, int reduc, Date debut, Date fin)
+			throws SQLException {
 		int idReduc = insertReduction(reduc, i);
-		
+
 		insertPeriodeReduction.setDate(1, debut);
 		insertPeriodeReduction.setDate(2, fin);
 		insertPeriodeReduction.setInt(3, idReduc);
-		
+
 		insertPeriodeReduction.executeUpdate();
 	}
 
-	public void insertDureeReduction(int i, int reduc, int duree) throws SQLException {
+	public void insertDureeReduction(int i, int reduc, int duree)
+			throws SQLException {
 		int idReduc = insertReduction(reduc, i);
-		
-		insertPeriodeReduction.setInt(1, duree);
-		insertPeriodeReduction.setInt(2, idReduc);
-		
-		insertPeriodeReduction.executeUpdate();
+
+		insertDureeReduction.setInt(1, duree);
+		insertDureeReduction.setInt(2, idReduc);
+
+		insertDureeReduction.executeUpdate();
 	}
-	
+
 	private static int getGeneratedKey(PreparedStatement prStatement)
 			throws SQLException {
 		int n = prStatement.executeUpdate();

@@ -25,7 +25,7 @@ public class Interface {
 		int choix;
 
 		enTete("AirChambreDhotes");
-		System.out.println("0 - Retour au menu");
+		System.out.println("0 - Quitter l'application");
 		System.out.println("1 - Effectuer une recherche");
 		System.out.println("2 - Se connecter");
 		System.out.println("3 - S'inscrire");

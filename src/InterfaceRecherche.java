@@ -1,3 +1,4 @@
+import java.sql.Date;
 import java.sql.SQLException;
 
 public class InterfaceRecherche {
@@ -14,11 +15,12 @@ public class InterfaceRecherche {
 		System.out.println("5 - Nombre de piece(s)");
 		System.out.println("6 - Prestation(s)");
 		System.out.println("7 - Date");
-		System.out.println("8 - Aucun");
+		System.out.println("8 - Inclure transport à l'arrivée et au départ");
+		System.out.println("9 - Aucun");
 		Interface.ligne(Interface.largeurEcran);
 
 		choix = ReadTools.readString();
-		while (testEntreeMenu(choix, 7) == false) {
+		while (testEntreeMenu(choix, 9) == false) {
 			System.out.println(" ↳ Entrer une requete de la forme: 1 3 5");
 			choix = ReadTools.readString();
 		}
@@ -34,14 +36,15 @@ public class InterfaceRecherche {
 		String surface="";
 		String nbPiece="";
 		String prestation="";
-		String dates="";
+		Date d1=null, d2=null;
+		boolean transport=false;
 		boolean aucun=false;
 
 		for (int i = 0; i < decoup.length; i++) {
 			switch (Integer.parseInt(decoup[i])) {
 
 			case 0:
-				Interface.MenuPrincipal();
+				Interface.menuPrincipal();
 				break;
 
 			case 1:
@@ -49,7 +52,7 @@ public class InterfaceRecherche {
 				System.out.println("0 - Usage");
 				Interface.ligne(Interface.largeurEcran);
 				lieu=ReadTools.readString();
-				if(testEntreeMenu(lieu, 1)==true){
+				while(testEntreeMenu(lieu, 1)==true){
 					System.out.println(" ↳ Entrer une requete de la forme: Paris, Lyon, Bordeaux ");
 					lieu=ReadTools.readString();
 				}
@@ -71,7 +74,7 @@ public class InterfaceRecherche {
 			case 3:
 				Interface.enTete2("Specification du type de location");
 				System.out.println("0 - Appartement");
-				System.out.println("1 - Maison");
+				System.out.println("1 - Chambre");
 				Interface.ligne(Interface.largeurEcran);
 				
 				typeLocation= ReadTools.readString();
@@ -80,9 +83,8 @@ public class InterfaceRecherche {
 					System.out.println(" ↳ Entrer une requete de la forme: 0 ou 1 ou 0 1");
 					typeLocation= ReadTools.readString();
 				}
-				typeLocation = evalTypeLocation(typeLocation);
 				
-				
+				break;
 				
 			case 4:
 				Interface.enTete2("Specification de la surface");
@@ -115,11 +117,13 @@ public class InterfaceRecherche {
 				System.out.println("0 - Petit Dejeuner");
 				System.out.println("1 - Dejeuner");
 				System.out.println("2 - Diner");
-				System.out.println("3 - Visites");
+				System.out.println("3 - Visites proposees avec la location");
+				System.out.println("4 - Loisirs, activitees");
+
 				Interface.ligne(Interface.largeurEcran);
 				
 				prestation= ReadTools.readString();
-				while(testEntreeMenu(prestation, 3)==false){
+				while(testEntreeMenu(prestation, 4)==false){
 					System.out.println(" ↳ Entrer une requete de la forme: 0 3");
 					prestation= ReadTools.readString();
 				}
@@ -128,17 +132,17 @@ public class InterfaceRecherche {
 
 			case 7:
 				Interface.enTete2("Specification date de depart et date de retour");
-				System.out.println("0 - Usage");
-				Interface.ligne(Interface.largeurEcran);
-
-				dates=ReadTools.readString();
-
-				while(testDateFormat(dates)==false){
-					System.out.println(" ↳ Entrer une requete de la forme: yyyy-MM-dd   yyyy-MM-dd");
-					dates=ReadTools.readString();
-				}
+			
+				System.out.println("Entrer la date de debut au format JJ/MM/AA: ");
+				d1 = ReadTools.readDate();
+				System.out.println("Entrer la date de fin au format JJ/MM/AA: ");
+				d2 = ReadTools.readDate();
 				break;
+			
 			case 8:
+				transport = true;
+				break;
+			case 9:
 				aucun = true;
 				break;
 
@@ -146,53 +150,43 @@ public class InterfaceRecherche {
 				System.out.println("Erreur swich recherche");
 
 			}
-			RechercheInBase.selectionCritere(lieu, prix, surface, typeLocation, nbPiece, prestation, dates, aucun);
+			RechercheInBase.selectionCritere(lieu, prix, typeLocation, surface, nbPiece, prestation, d1, d2,transport, aucun);
 
 		}
 
 	}
 
-	public static String evalTypeLocation(String s) {
-		String typeLocation = "";
-		String[] decoup = s.split(" ");
-		for (int i = 0; i < decoup.length; i++) {
-			switch (Integer.parseInt(decoup[i])) {
-			case 0:
-				typeLocation += "appartement";
-				break;
-			case 1:
-				typeLocation += "maison";
-			}
-		}
-		return typeLocation;
-	}
+	
 
 	public static String evalPrestation(String s){
 		String prestation="";
-		String visites;
+		String loisirs;
 		String[] decoup = s.split(" ");	
 		for (int i = 0; i < decoup.length; i++) {
 
 			switch(Integer.parseInt(decoup[i])){
 			case 0:
-				prestation+="petit dejeuner,";
+				prestation+="0, ";
 				break;
 			case 1:
-				prestation +="dejeuner,";
+				prestation+="1, ";
 				break;
 			case 2:
-				prestation+="diner,";
+				prestation+="2, ";
 				break;
 			case 3:
-				Interface.enTete2("Specification d'une ou plusieurs visites");
+				prestation+="3, ";
+			case 4:
+				Interface.enTete2("Specification de vos loisirs, activites");
 				System.out.println("0 - Usage");
 				Interface.ligne(Interface.largeurEcran);
-				visites=ReadTools.readString();
-				if(testEntreeMenu(visites, 1)==true){
-					System.out.println(" ↳ Entrer une requete de la forme: Louvres, Tour Eiffel, ");
-					visites=ReadTools.readString();
+				
+				loisirs=ReadTools.readString();
+				while(testEntreeMenu(loisirs, 1)==true){
+					System.out.println(" ↳ Entrer une requete de la forme: golf, tennis, zoo, poterie ");
+					loisirs=ReadTools.readString();
 				}
-				prestation+=visites;
+				prestation+=loisirs;
 				break;
 			}
 		}
@@ -209,6 +203,16 @@ public class InterfaceRecherche {
 		}
 	}
 
+	
+	
+	public static boolean isFloat(String s) {
+		try {
+			double i = Float.parseFloat(s);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 	public static boolean testDateFormat(String entree) {
 		try {
 			String[] decoup = entree.split(" ");
@@ -235,7 +239,7 @@ public class InterfaceRecherche {
 					if (decoup[0].charAt(0) == '='
 							|| decoup[0].charAt(0) == '>'
 							|| decoup[0].charAt(0) == '<') {
-						if (isEntier(decoup[0].substring(1)))
+						if (isFloat(decoup[0].substring(1)))
 							return true;
 						else
 							return false;
@@ -246,8 +250,8 @@ public class InterfaceRecherche {
 
 			if (decoup.length == 2) {
 				if (decoup[0].charAt(0) == '>' && decoup[1].charAt(0) == '<') {
-					if (isEntier(decoup[0].substring(1))
-							&& isEntier(decoup[0].substring(1)))
+					if (isFloat(decoup[0].substring(1))
+							&& isFloat(decoup[0].substring(1)))
 						return true;
 					else
 						return false;
@@ -265,7 +269,7 @@ public class InterfaceRecherche {
 	}
 
 	public static boolean testEntreeMenu(String entree, int tailleMenu) {
-		String[] decoup = entree.split(" ");
+		String[] decoup = entree.split(" * ");
 		for (int i = 0; i < decoup.length; i++) {
 			if (isEntier(decoup[i]) == false)
 				return false;

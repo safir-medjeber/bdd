@@ -141,7 +141,7 @@ CREATE TABLE Reduction(
 CREATE TABLE Reduction_duree(
        duree_min integer,
        idReduction integer,
-       FOREIGN KEY(idReduction) REFERENCES Reduction(idReduction)
+       FOREIGN KEY(idReduction) REFERENCES Reduction(idReduction) ON DELETE CASCADE
 );
 
 

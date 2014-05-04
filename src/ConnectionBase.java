@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Date;
+import java.util.Calendar;
 
 public class ConnectionBase {
 
@@ -13,7 +14,11 @@ public class ConnectionBase {
 			insertAdresse, insertPerson, insertCompte, selectAppartByLogin,
 			selectAppartByLoginAndId, insertAppart, insertPrestation,
 			insertPhoto, insertReduction, insertDureeReduction,
-			insertPeriodeReduction;
+			insertPeriodeReduction, selectPrestationOfLogement,
+			selectPhotoOfLogement, selectDureeReductionOfLogement,
+			selectPeriodeReductionOfLogement, reserveLogement, delReduction,
+			delPrestation, delPhoto;
+
 	static Statement selectCritere;
 
 	public ConnectionBase(String user, String password) throws SQLException {
@@ -57,13 +62,43 @@ public class ConnectionBase {
 		insertPhoto = connection.prepareStatement(query);
 
 		query = "INSERT INTO Reduction (pourcentage, idLogement) VALUES (?,?)";
-		insertReduction = connection.prepareStatement(query);
+		insertReduction = connection.prepareStatement(query,
+				Statement.RETURN_GENERATED_KEYS);
 
 		query = "INSERT INTO Reduction_duree (duree_min, idReduction) VALUES (?,?)";
 		insertDureeReduction = connection.prepareStatement(query);
 
 		query = "INSERT INTO Reduction_periode (debut, fin, idReduction) VALUES (?,?,?)";
 		insertPeriodeReduction = connection.prepareStatement(query);
+
+		query = "SELECT idPrestation, prestation, prix FROM Prestation WHERE idLogement=?";
+		selectPrestationOfLogement = connection.prepareStatement(query);
+
+		query = "SELECT idPhoto, image FROM Photo WHERE idLogement=?";
+		selectPhotoOfLogement = connection.prepareStatement(query);
+
+		query = "SELECT Reduction.idReduction, pourcentage, duree_min FROM Reduction_duree "
+				+ "LEFT JOIN Reduction ON Reduction_duree.idReduction = Reduction.idReduction "
+				+ "WHERE idLogement=?";
+		selectDureeReductionOfLogement = connection.prepareStatement(query);
+
+		query = "SELECT Reduction.idReduction, pourcentage, debut, fin FROM Reduction_periode "
+				+ "LEFT JOIN Reduction ON Reduction_periode.idReduction = Reduction.idReduction "
+				+ "WHERE idLogement=?";
+		selectPeriodeReductionOfLogement = connection.prepareStatement(query);
+
+		query = "INSERT INTO Disponibilite (jour, idLogement) VALUES (?,?)";
+		reserveLogement = connection.prepareStatement(query);
+
+		query = "DELETE FROM Reduction WHERE idReduction=?";
+		delReduction = connection.prepareStatement(query);
+		
+		query = "DELETE FROM Prestation WHERE idPrestation=?";
+		delPrestation = connection.prepareStatement(query);
+		
+		query = "DELETE FROM Photo WHERE idPhoto=?";
+		delPhoto = connection.prepareStatement(query);
+
 	}
 
 	public void close() throws SQLException {
@@ -161,8 +196,8 @@ public class ConnectionBase {
 	}
 
 	public void insertPhoto(int appart, String path) throws SQLException {
-		setInt(insertPhoto, 1, appart);
-		insertPhoto.setString(2, path);
+		insertPhoto.setString(1, path);
+		setInt(insertPhoto, 2, appart);
 
 		insertPhoto.executeUpdate();
 	}
@@ -185,6 +220,59 @@ public class ConnectionBase {
 		insertPeriodeReduction.executeUpdate();
 	}
 
+	public void reservePeriode(int logement, Date debut, Date fin)
+			throws SQLException {
+		Calendar c = Calendar.getInstance();
+		while (debut.before(fin)) {
+			reserveLogement.setDate(1, debut);
+			reserveLogement.setInt(2, logement);
+
+			reserveLogement.executeUpdate();
+			c.setTimeInMillis(debut.getTime());
+			c.add(Calendar.DATE, 1);
+			debut = new Date(c.getTimeInMillis());
+		}
+
+	}
+
+	public ResultSet selectPrestationOf(int logement) throws SQLException {
+		return selectById(logement, selectPrestationOfLogement);
+	}
+
+	public ResultSet selectPhotoOf(int logement) throws SQLException {
+		return selectById(logement, selectPhotoOfLogement);
+	}
+
+	public ResultSet selectPeriodeReductionOf(int logement) throws SQLException {
+		return selectById(logement, selectPeriodeReductionOfLogement);
+	}
+
+	public ResultSet selectDureeReductionOf(int logement) throws SQLException {
+		return selectById(logement, selectDureeReductionOfLogement);
+	}
+
+	public void delReduction(int id) throws SQLException {
+		delById(id, delReduction);
+	}
+
+	public void delPrestation(int id) throws SQLException {
+		delById(id, delPrestation);
+	}
+
+	public void delPhoto(int id) throws SQLException {
+		delById(id, delPhoto);
+	}
+
+	private static void delById(int id, PreparedStatement p) throws SQLException{
+		p.setInt(1, id);
+		p.executeUpdate();
+	}
+	
+	private static ResultSet selectById(int id, PreparedStatement p) throws SQLException{
+		p.setInt(1, id);
+		return p.executeQuery();
+	}
+	
 	public void insertDureeReduction(int i, int reduc, int duree)
 			throws SQLException {
 		int idReduc = insertReduction(reduc, i);
@@ -216,4 +304,5 @@ public class ConnectionBase {
 		if (value != -1)
 			p.setFloat(index, value);
 	}
+
 }

@@ -1,5 +1,7 @@
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
+import java.util.Set;
 
 public class InterfaceConnecte {
 	public static final int CHAMBRE = 1, APPART = 0;
@@ -37,8 +39,7 @@ public class InterfaceConnecte {
 		case 0:
 			return;
 		case 1:
-			Interface.printLogement(
-					Interface.connection.selectAppartement(login), true);
+			Printer.printLogement(Interface.connection.selectAppartement(login));
 			break;
 		case 2:
 			modifAppart(login);
@@ -61,11 +62,103 @@ public class InterfaceConnecte {
 		if (logement == -1)
 			return;
 		if (Interface.connection.selectAppartement(login, logement)) {
-			System.out.println("0/1 - Ajouter/Supprimer des prestations");
-			System.out.println("2/3 - Ajoutes/Supprimer des photos");
-			System.out.println("3/4 - Ajouter/Supprimer des reductions");
-			System.out.println("5   - Reserver une periode");
+			printModif(login, logement);
 		}
+	}
+
+	private static void printModif(String login, int logement)
+			throws SQLException {
+		int choix;
+
+		System.out.println("0   - Retour");
+		System.out.println("1/2 - Ajouter/Supprimer des prestations");
+		System.out.println("3/4 - Ajoutes/Supprimer des photos");
+		System.out.println("5/6 - Ajouter/Supprimer des reductions");
+		System.out.println("7   - Reserver une periode");
+
+		choix = ReadTools.readInt();
+		switch (choix) {
+		case 0:
+			return;
+		case 1:
+			addPrestation(new int[] { logement });
+			break;
+		case 2:
+			suppressionPrestation(logement);
+			break;
+		case 3:
+			addPhotos(new int[] { logement });
+			break;
+		case 4:
+			suppressionPhoto(logement);
+			break;
+		case 5:
+			addReduction(new int[] { logement });
+			break;
+		case 6:
+			suppressionReduction(logement);
+			break;
+		case 7:
+			reservePeriode(logement);
+			break;
+		default:
+			System.out.println("Entrer un chiffre entre 0 et 7");
+			break;
+		}
+		printModif(login, logement);
+	}
+
+	private static void reservePeriode(int logement) throws SQLException {
+		Date debut, fin;
+
+		System.out.println("Entrer une periode: ");
+		System.out.print("Debut - ");
+		debut = ReadTools.readDate();
+		System.out.print("Fin - ");
+		fin = ReadTools.readDate();
+
+		Interface.connection.reservePeriode(logement, debut, fin);
+	}
+
+	private static void suppressionReduction(int logement) throws SQLException {
+		int id;
+		ResultSet periodeSet = Interface.connection
+				.selectPeriodeReductionOf(logement);
+		ResultSet dureeSet = Interface.connection
+				.selectDureeReductionOf(logement);
+
+		Printer.printReductionDuree(dureeSet);
+		Printer.printReductionPeriode(periodeSet);
+
+		System.out.print("Entrer l'id à supprimer (ou -1): ");
+		id = ReadTools.readInt();
+		if (id != -1)
+			Interface.connection.delReduction(id);
+	}
+
+	private static void suppressionPhoto(int logement) throws SQLException {
+		int id;
+		ResultSet photoSet = Interface.connection.selectPhotoOf(logement);
+		
+		Printer.printPhoto(photoSet);
+		System.out.print("Entrer l'id à supprimer (ou -1): ");
+		id = ReadTools.readInt();
+		if (id != -1)
+			Interface.connection.delPhoto(id);
+	}
+
+	private static void suppressionPrestation(int logement) throws SQLException {
+		int id;
+		
+		ResultSet prestationSet = Interface.connection
+				.selectPrestationOf(logement);
+
+		Printer.printPrestation(prestationSet);
+
+		System.out.print("Entrer l'id à supprimer (ou -1): ");
+		id = ReadTools.readInt();
+		if (id != -1)
+			Interface.connection.delPrestation(id);
 	}
 
 	private static void getAppartement(String login) throws SQLException {
@@ -159,6 +252,7 @@ public class InterfaceConnecte {
 		while (path.length() != 0) {
 			for (int i : appart)
 				Interface.connection.insertPhoto(i, path);
+			path = ReadTools.readString();
 		}
 	}
 
@@ -175,6 +269,7 @@ public class InterfaceConnecte {
 
 		prestation = ReadTools.readString();
 		while (prestation.length() != 0) {
+			System.out.print("Prix: ");
 			prix = ReadTools.readFloat();
 			for (int i : appart)
 				Interface.connection.insertPrestation(prestation, prix, i);
@@ -183,3 +278,4 @@ public class InterfaceConnecte {
 	}
 
 }
+

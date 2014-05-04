@@ -67,14 +67,21 @@ public class ReadTools {
 			Calendar cal = Calendar.getInstance();
 			String s;
 			String[] tab;
+			int day, month, year;
 			System.out.println("Entrer une date : (JJ/MM/AA)");
 			s = readString();
 			if (empty && s.length() == 0)
 				return null;
 			tab = s.split("/");
-			cal.set(Calendar.YEAR, Integer.parseInt(tab[2]));
-			cal.set(Calendar.MONTH, Integer.parseInt(tab[1]));
-			cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(tab[0]) + 2000);
+			day = Integer.parseInt(tab[0]);
+			month = Integer.parseInt(tab[1]);
+			year = Integer.parseInt(tab[2]);
+			if (tab[2].length() == 2)
+				year += 2000;
+
+			cal.set(Calendar.YEAR, year);
+			cal.set(Calendar.MONTH, month - 1);
+			cal.set(Calendar.DAY_OF_MONTH, day);
 
 			return new Date(cal.getTime().getTime());
 		} catch (Exception e) {

@@ -10,22 +10,24 @@ public class InterfaceConnecte {
 		String password = PasswordField.readPassword("password for " + login
 				+ ": ");
 		if (Interface.connection.connecteCompte(login, password)) {
-			printConnecter();
-			int choice = ReadTools.readInt();
-			evalConnecte(choice, login);
+			printConnecter(login);
 		} else
 			System.out.println("Erreur dans l'identifiant ou le mot de passe");
 	}
 
-	public static void printConnecter() {
+	public static void printConnecter(String login) throws SQLException {
+		int choix;
+
 		System.out.println("Veuillez entrez votre choix : ");
 		System.out.println("------------------------------");
-		System.out.println("0 - Fin");
+		System.out.println("0 - Retour au menu");
 		System.out.println("1 - Voir mes appartements");
 		System.out.println("2 - Modifier un appartement");
 		System.out.println("3 - Ajouter un appartement");
 		System.out.println("------------------------------");
 
+		choix = ReadTools.readInt();
+		evalConnecte(choix, login);
 	}
 
 	public static void evalConnecte(int choice, String login)
@@ -33,8 +35,7 @@ public class InterfaceConnecte {
 
 		switch (choice) {
 		case 0:
-			System.exit(0);
-			break;
+			return;
 		case 1:
 			Interface.printLogement(
 					Interface.connection.selectAppartement(login), true);
@@ -48,16 +49,23 @@ public class InterfaceConnecte {
 		default:
 			System.out.println("Erreur");
 		}
+		printConnecter(login);
 	}
 
-	private static void modifAppart(String login) {
+	private static void modifAppart(String login) throws SQLException {
 		int logement;
-		System.out.print("Entrer le numero du logement que voulez modifiez");
+		System.out.println("Entrer le numero du logement que voulez modifiez");
 		System.out.println("(-1 pour annuler) ");
-		
+
 		logement = ReadTools.readInt();
-		if(logement == -1)
+		if (logement == -1)
 			return;
+		if (Interface.connection.selectAppartement(login, logement)) {
+			System.out.println("0/1 - Ajouter/Supprimer des prestations");
+			System.out.println("2/3 - Ajoutes/Supprimer des photos");
+			System.out.println("3/4 - Ajouter/Supprimer des reductions");
+			System.out.println("5   - Reserver une periode");
+		}
 	}
 
 	private static void getAppartement(String login) throws SQLException {
@@ -97,16 +105,20 @@ public class InterfaceConnecte {
 		addReduction(appart);
 	}
 
+	private static void printReduction() {
+		System.out.println("--- Ajouter des reductions ---");
+		System.out.println("↵ - Pour continuer");
+		System.out.println("0 - Sur la periode");
+		System.out.println("1 - Sur la duree");
+	}
+
 	private static void addReduction(int[] appart) throws SQLException {
 		int choix;
 		int periode;
 		Date debut, fin;
 		int reduc;
 
-		System.out.println("--- Ajouter des reductions ---");
-		System.out.println("↵ - Pour continuer");
-		System.out.println("0 - Sur la duree");
-		System.out.println("1 - Sur la periode");
+		printReduction();
 
 		choix = ReadTools.readEmptyInt();
 		while (choix != -1) {
@@ -134,6 +146,8 @@ public class InterfaceConnecte {
 			default:
 				System.out.println("Entrer un nombre entre 0 et 1");
 			}
+			printReduction();
+			choix = ReadTools.readEmptyInt();
 		}
 	}
 
@@ -156,7 +170,7 @@ public class InterfaceConnecte {
 		System.out.println("↵ - Pour continuer");
 		System.out.println("0 - Petit-déjeuner");
 		System.out.println("1 - Repas");
-		System.out.println("3 - Visite");
+		System.out.println("2 - Visite");
 		System.out.println("    Autre");
 
 		prestation = ReadTools.readString();

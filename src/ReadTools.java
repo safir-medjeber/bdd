@@ -7,7 +7,7 @@ public class ReadTools {
 
 	public static String readString() {
 		try {
-			return in.nextLine();
+			return in.nextLine().toLowerCase();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

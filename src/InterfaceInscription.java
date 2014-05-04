@@ -6,7 +6,7 @@ public class InterfaceInscription {
 	public static void getCompte() throws SQLException   {
 		String login, password;
 		int n;
-		
+		Interface.enTete("Inscription");
 		n = getPerson();
 		System.out.print("login: ");
 		login = ReadTools.readString();

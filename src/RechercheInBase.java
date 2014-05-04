@@ -17,7 +17,7 @@ public class RechercheInBase {
 
 		String[] decoup;
 		selectCritere = ConnectionBase.connection.createStatement();
-		String cmd = "SELECT description, type, surface, nb_pieces, prix , ville FROM Logement " +
+		String cmd = "SELECT description, type, surface, nb_pieces, prix , ville , idlogement FROM Logement " +
 				"LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse";
 
 		if (aucunCrit == true) {
@@ -73,7 +73,7 @@ public class RechercheInBase {
 					"LEFT JOIN Disponibilite on Logement.idlogement=Disponibilite.idlogement "+
 					"WHERE jour<'"+d1+ "' OR jour>'"+d2+"'";
 			System.out.println(cmdDate);
-			Printer.printLogement(selectCritere.executeQuery(cmdDate));
+		//	Printer.printLogement(selectCritere.executeQuery(cmdDate));
 
 		}
 		
@@ -81,8 +81,7 @@ public class RechercheInBase {
 		cmd=cmd.substring(0,cmd.length()-4);
 		System.out.println(cmd);
 
-		//Interface.printLogement(selectCritere.executeQuery(cmd));
-
+		Printer.printLogement(selectCritere.executeQuery(cmd));
 
 	}
 

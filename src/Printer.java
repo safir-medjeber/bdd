@@ -4,18 +4,22 @@ import java.sql.SQLException;
 public class Printer {
 
 	public static void printLogement(ResultSet set) throws SQLException {
+		System.out.println();
+		System.out.println();
 		while (set != null && set.next()) {
-			System.out.println(("Ref - " + set.getInt("idLogement")));
-			System.out
-					.println("Description\t: " + set.getString("description"));
+			System.out.println(("Reference\t:" + set.getInt("idLogement")));
+			System.out.println("Description\t: " + set.getString("description"));
 			System.out.println("Type\t\t: " + set.getString("type"));
 			System.out.println("Surface\t\t: " + set.getFloat("surface"));
 			System.out
-					.println("Nbr de pieces\t: " + set.getString("nb_pieces"));
+			.println("Nbr de pieces\t: " + set.getString("nb_pieces"));
 			System.out.println("Prix\t\t: " + set.getFloat("prix"));
 			System.out.println("Situe a\t\t: " + set.getString("ville"));
-			Interface.ligne(30);
+			Interface.ligne(Interface.largeurEcran);
+			System.out.println();
 		}
+		ReadTools.readString();
+
 	}
 
 	public static void printPrestation(ResultSet set) throws SQLException {
@@ -38,7 +42,7 @@ public class Printer {
 		while (set != null && set.next()) {
 			System.out.println("Id - " + set.getInt("idReduction"));
 			System.out.println("Pourcentage \t: " + set.getInt("pourcentage"));
-			System.out.println("Periode \t: " + set.getDate("debut") + " à "
+			System.out.println("Periode \t: " + set.getDate("debut") + " �� "
 					+ set.getDate("fin"));
 		}
 	}

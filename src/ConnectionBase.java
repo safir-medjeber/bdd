@@ -18,7 +18,9 @@ public class ConnectionBase {
 			selectPrestationOfLogement, selectPhotoOfLogement,
 			selectDureeReductionOfLogement, selectPeriodeReductionOfLogement,
 			reserveLogement, delReduction, delPrestation, delPhoto,
-			logementIsDisponible, transportIsDisponible;
+			logementIsDisponible, transportIsDisponible, insertReservation,
+			insertVehicule, insertReservationPrestation;
+
 	PreparedStatement selectVilleOfLogement;
 
 	static Statement selectCritere;
@@ -107,18 +109,28 @@ public class ConnectionBase {
 		query = "DELETE FROM Photo WHERE idPhoto=?";
 		delPhoto = connection.prepareStatement(query);
 
-		query = "SELECT ville FROM Logement LEFT JOIN Adresse ON Logement.idAddresse = Adresse.idAdresse "
+		query = "SELECT ville FROM Logement LEFT JOIN Adresse ON Logement.idAdresse = Adresse.idAdresse "
 				+ "WHERE idLogement=?";
 		selectVilleOfLogement = connection.prepareStatement(query);
 
 		query = "SELECT idLogement FROM Disponibilite WHERE ?<jour AND jour<?";
 		logementIsDisponible = connection.prepareStatement(query);
 
-		query = "SELECT nb_vehicle_libre - COUNT(Vehicule.*) as vehicules FROM Transport "
-				+ "LEFT JOIN Vehicule ON Transport.ville = Vehicule.ville "
-				+ "WHERE jour=? AND heure=? AND ville=?"
-				+ "GROUP BY ville";
+		query = "SELECT nb_vehicule_libre - COUNT(Vehicule.*) as vehicules FROM Transport "
+				+ "LEFT JOIN Vehicule ON Transport.ville = Vehicule.idTransport "
+				+ "WHERE jour=? AND heure=? AND ville=?" + " GROUP BY ville, jour, heure";
 		transportIsDisponible = connection.prepareStatement(query);
+
+		query = "INSERT INTO Reservation(date_reservation, debut, fin, idPersonne, idLogement) "
+				+ "VALUES (CURRENT_DATE,?,?,?,?)";
+		insertReservation = connection.prepareStatement(query,
+				Statement.RETURN_GENERATED_KEYS);
+
+		query = "INSERT INTO Vehicule(jour, heure, idReservation, idTransport) VALUES (?,?,?,?)";
+		insertVehicule = connection.prepareStatement(query);
+
+		query = "INSERT INTO PrestationOfReservation (idPrestation, idReservation) VALUES (?,?)";
+		insertReservationPrestation = connection.prepareStatement(query);
 	}
 
 	public void close() throws SQLException {
@@ -342,23 +354,57 @@ public class ConnectionBase {
 	public boolean logementIsDisponible(int idLogement, Date debut, Date fin)
 			throws SQLException {
 		logementIsDisponible.setDate(1, debut);
-		logementIsDisponible.setDate(1, fin);
+		logementIsDisponible.setDate(2, fin);
 
 		return !logementIsDisponible.executeQuery().next();
 	}
 
-	public boolean transportIsDisponible(int idLogement, Date jour, int heure, String ville) throws SQLException {
+	public boolean transportIsDisponible(int idLogement, Date jour, int heure,
+			String ville) throws SQLException {
 		transportIsDisponible.setDate(1, jour);
 		transportIsDisponible.setInt(2, heure);
 		transportIsDisponible.setString(3, ville);
-		
+
 		ResultSet set = transportIsDisponible.executeQuery();
-		if(!set.next())
+		if (!set.next())
 			return false;
 		return set.getInt("vehicules") > 0;
 	}
 
-//	public ResultSet selectVilleOf(int idLogement) {
-//
-//	}
+	public String selectVilleOf(int idLogement) throws SQLException {
+		selectVilleOfLogement.setInt(1, idLogement);
+
+		ResultSet set = selectVilleOfLogement.executeQuery();
+		set.next();
+		return set.getString("ville");
+	}
+
+	public int insertReservation(Date debut, Date fin, int personne,
+			int idLogement) throws SQLException {
+
+		insertReservation.setDate(1, debut);
+		insertReservation.setDate(2, fin);
+		insertReservation.setInt(3, personne);
+		insertReservation.setInt(4, idLogement);
+
+		return getGeneratedKey(insertReservation);
+	}
+
+	public void insertVehicule(Date jour, int heure, int idReservation,
+			String ville) throws SQLException {
+		insertVehicule.setDate(1, jour);
+		insertVehicule.setInt(2, heure);
+		insertVehicule.setInt(3, idReservation);
+		insertVehicule.setString(4, ville);
+
+		insertVehicule.executeUpdate();
+	}
+
+	public void insertReservationPrestation(int idReservation, int idReduction)
+			throws SQLException {
+		insertReservationPrestation.setInt(1 ,idReduction);
+		insertReservationPrestation.setInt(2, idReservation);
+		
+		insertReservationPrestation.executeUpdate();
+	}
 }

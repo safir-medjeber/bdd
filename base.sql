@@ -3,6 +3,9 @@ DROP TABLE IF EXISTS Transport;
 DROP TABLE IF EXISTS Suggestion;
 DROP TABLE IF EXISTS Disponibilite;
 DROP TABLE IF EXISTS Photo;
+
+DROP TABLE IF EXISTS PrestationOfReservation;
+
 DROP TABLE IF EXISTS Prestation;
 
 DROP TABLE IF EXISTS Reduction_duree;
@@ -17,7 +20,7 @@ DROP TABLE IF EXISTS Compte;
 DROP TABLE IF EXISTS Personne;
 DROP TABLE IF EXISTS Adresse;
 DROP TABLE IF EXISTS Ville;
-
+ 
 CREATE TABLE Ville(
        ville varchar(64), 
        PRIMARY KEY(ville)
@@ -89,12 +92,14 @@ CREATE TABLE Transport(
 
 CREATE TABLE Vehicule(
        idDisponible serial,
-       heure date,  
+       jour date,  
+       heure int,
        idReservation integer,
        idTransport varchar(64),
        PRIMARY KEY(idDisponible),
        FOREIGN KEY(idReservation) REFERENCES Reservation(idReservation),
-       FOREIGN KEY(idTransport) REFERENCES Transport(ville)
+       FOREIGN KEY(idTransport) REFERENCES Transport(ville),
+       CHECK (heure>0 AND heure<25)
 );       
 
 CREATE TABLE Suggestion(
@@ -166,3 +171,9 @@ CREATE TABLE Facture(
        FOREIGN KEY(idReservation) REFERENCES Reservation(idReservation)
 );
 	
+CREATE TABLE PrestationOfReservation(
+       idPrestation integer,
+       idReservation integer,
+       FOREIGN KEY(idPrestation) REFERENCES Prestation(idPrestation),
+       FOREIGN KEY(idReservation) REFERENCES Reservation(idReservation)
+);	

@@ -1,5 +1,3 @@
-import java.io.ObjectInputStream.GetField;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -40,7 +38,7 @@ public class RechercheInBase {
 			}
 			if (prix != "") {
 				if (n++ > 0)
-					where += " AND ";
+					where += "\n\tAND ";
 				where += "(";
 				decoup = prix.split(" * ");
 				where += parseInterval(decoup, "Logement.prix");
@@ -48,7 +46,7 @@ public class RechercheInBase {
 			}
 			if (typeLocation != "") {
 				if (n++ > 0)
-					where += " AND ";
+					where += "\n\tAND ";
 				where += "(";
 				decoup = typeLocation.split(" * ");
 				where += parseType(decoup);
@@ -56,7 +54,7 @@ public class RechercheInBase {
 			}
 			if (surface != "") {
 				if (n++ > 0)
-					where += " AND ";
+					where += "\n\tAND ";
 				where += "(";
 				decoup = surface.split(" * ");
 				where += parseInterval(decoup, "surface");
@@ -64,7 +62,7 @@ public class RechercheInBase {
 			}
 			if (nbPiece != "") {
 				if (n++ > 0)
-					where += " AND ";
+					where += "\n\tAND ";
 				where += "(";
 				decoup = nbPiece.split(" * ");
 				where += parseInterval(decoup, "nb_pieces");
@@ -75,7 +73,7 @@ public class RechercheInBase {
 				String presta = parsePrestation(decoup);
 				cmd += " LEFT JOIN Prestation on Prestation.idlogement=Logement.idlogement ";
 				if (n++ > 0)
-					where += " AND ";
+					where += "\n\tAND ";
 				where += "(";
 				where += presta;
 				where += ")";
@@ -84,7 +82,7 @@ public class RechercheInBase {
 			if (debut != null && fin != null) {
 				Date tmpDebut, tmpFin;
 				if (n++ > 0)
-					where += " AND ";
+					where += "\n\tAND ";
 				where += "(";
 				where += "Logement.idLogement NOT IN ( SELECT idLogement FROM Disponibilite WHERE ( ";
 
@@ -105,10 +103,18 @@ public class RechercheInBase {
 				}
 				where = where.substring(0, where.length() - 2);
 				where += ")))";
+				
+				if (transport == true){
+					if (n++ > 0)
+						where += "\n\tAND ";
+
+					where += generateTransport(debut, depart);
+					where += "\n\tAND ";
+					where += generateTransport(fin, arrive);
+
+				}
 			}
 
-			if (transport == true)
-				cmd += " RIGHT JOIN Transport on Transport.ville=Adresse.ville ";
 
 			if (!(where.equals(" WHERE "))) {
 				cmd += where;
@@ -118,6 +124,16 @@ public class RechercheInBase {
 			Printer.printLogement(selectCritere.executeQuery(cmd));
 		}
 	}
+
+	private static String generateTransport(Date date, int heure) {
+		return "Adresse.ville IN ("
+				+ "SELECT ville FROM Transport "
+				+ "LEFT JOIN Vehicule ON Transport.ville = Vehicule.idTransport "
+				+ "WHERE  ville=Adresse.ville "
+				+ "AND (heure="+heure+ " OR heure IS NULL) "
+				+ "AND (jour='"+ date +"' OR jour IS NULL) "
+				+ "GROUP BY ville "
+				+ "HAVING COUNT(Vehicule) < nb_vehicule_libre)";	}
 
 	public static String parseInterval(String[] decoup, String condition) {
 		String cmd = "";

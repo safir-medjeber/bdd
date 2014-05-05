@@ -89,11 +89,11 @@ public class InterfaceReservation {
 				Interface.connection.insertReservationPrestation(idReservation,
 						i);
 		}
-		
+
 		printPayer(idReservation);
 	}
 
-	private static void printPayer(int idReservation) {
+	private static void printPayer(int idReservation) throws SQLException {
 		Interface.enTete("Payer");
 		System.out.println("0 - Payer maintenant");
 		System.out.println("1 - Payer plus tard");
@@ -112,11 +112,14 @@ public class InterfaceReservation {
 		}
 	}
 
-	private static void payer(int idReservation) {
+	private static void payer(int idReservation) throws SQLException {
 		Interface.enTete("Payer");
-		//TODO
-		//Recuperer les facture associer a la personne
-		//Recuperer le proprietaire
-		//Calculer le prix, avec reductions
+
+		int n = Interface.connection.countFactureOf(idReservation);
+		int loueur = Interface.connection
+				.getReservationProprietaire(idReservation);
+		
+		// TODO
+		// Calculer le prix, avec reductions
 	}
 }

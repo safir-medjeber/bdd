@@ -27,6 +27,10 @@ public class InterfaceInscription {
 		prenom = ReadTools.readString();
 		System.out.print("Mail: ");
 		mail = ReadTools.readString();
+		
+		int n = Interface.connection.selectPersonne(nom, prenom, mail);
+		if(n != -1)
+			return n;
 		adresse = getAddr();
 
 		return Interface.connection.insertPerson(nom, prenom, mail, adresse);

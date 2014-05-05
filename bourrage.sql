@@ -606,3 +606,12 @@ INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('1',15,122);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',15,124);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('randonnee',15,130);
 
+
+-----------------
+--- Transport ---
+-----------------
+
+INSERT INTO Transport(ville, nb_vehicule_libre, prix) VALUES
+('paris', 10, 40),
+('pékin', 100, 15),
+('moscou', 5, 150);

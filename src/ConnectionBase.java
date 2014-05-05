@@ -11,15 +11,17 @@ public class ConnectionBase {
 
 	static Connection connection;
 	private PreparedStatement selectCompte, selectLogin, selectVille,
-			insertVille, insertAdresse, insertPerson, insertCompte,
-			selectAppartById, selectAppartByLogin, selectAppartByLoginAndId,
-			insertAppart, insertPrestation, insertPhoto, insertReduction,
-			insertDureeReduction, insertPeriodeReduction,
-			selectPrestationOfLogement, selectPhotoOfLogement,
-			selectDureeReductionOfLogement, selectPeriodeReductionOfLogement,
-			reserveLogement, delReduction, delPrestation, delPhoto,
-			logementIsDisponible, transportIsDisponible, insertReservation,
-			insertVehicule, insertReservationPrestation;
+			selectPersonne, insertVille, insertAdresse, insertPerson,
+			insertCompte, selectAppartById, selectAppartByLogin,
+			selectAppartByLoginAndId, insertAppart, insertPrestation,
+			insertPhoto, insertReduction, insertDureeReduction,
+			insertPeriodeReduction, selectPrestationOfLogement,
+			selectPhotoOfLogement, selectDureeReductionOfLogement,
+			selectPeriodeReductionOfLogement, reserveLogement, delReduction,
+			delPrestation, delPhoto, logementIsDisponible,
+			transportIsDisponible, insertReservation, insertVehicule,
+			insertReservationPrestation, countFactureOfReservation,
+			getReservationProprietaire;
 
 	PreparedStatement selectVilleOfLogement;
 
@@ -37,6 +39,9 @@ public class ConnectionBase {
 
 		query = "SELECT ville FROM Ville WHERE ville=?";
 		selectVille = connection.prepareStatement(query);
+
+		query = "SELECT idPersonne FROM Personne WHERE nom=? prenom=? mail=?";
+		selectPersonne = connection.prepareStatement(query);
 
 		query = "INSERT INTO Ville (ville) VALUES (?)";
 		insertVille = connection.prepareStatement(query);
@@ -118,7 +123,10 @@ public class ConnectionBase {
 
 		query = "SELECT nb_vehicule_libre - COUNT(Vehicule.*) as vehicules FROM Transport "
 				+ "LEFT JOIN Vehicule ON Transport.ville = Vehicule.idTransport "
-				+ "WHERE jour=? AND heure=? AND ville=?" + " GROUP BY ville, jour, heure";
+				+ "WHERE (jour=? OR jour IS NULL)"
+				+ "AND (heure=? OR heure IS NULL)"
+				+ "AND ville=?"
+				+ " GROUP BY ville, jour, heure";
 		transportIsDisponible = connection.prepareStatement(query);
 
 		query = "INSERT INTO Reservation(date_reservation, debut, fin, idPersonne, idLogement) "
@@ -131,6 +139,17 @@ public class ConnectionBase {
 
 		query = "INSERT INTO PrestationOfReservation (idPrestation, idReservation) VALUES (?,?)";
 		insertReservationPrestation = connection.prepareStatement(query);
+
+		query = "SELECT COUNT(*) as factures FROM Facture LEFT JOIN Reservation "
+				+ "ON Reservation.idPersonne = Facture.idPayeur "
+				+ "WHERE idReservation=?";
+		countFactureOfReservation = connection.prepareStatement(query);
+
+		query = "SELECT idPersonne FROM Personne LEFT JOIN Compte ON Compte.idPersonne = Personne.idPersonne "
+				+ "LEFT JOIN Logement ON Logement.login = Compte.login "
+				+ "LEFT JOIN Reservation ON Reservation.idLogement = Logment.idLogement "
+				+ "WHERE idReservation=?";
+		getReservationProprietaire = connection.prepareStatement(query);
 	}
 
 	public void close() throws SQLException {
@@ -402,9 +421,41 @@ public class ConnectionBase {
 
 	public void insertReservationPrestation(int idReservation, int idReduction)
 			throws SQLException {
-		insertReservationPrestation.setInt(1 ,idReduction);
+		insertReservationPrestation.setInt(1, idReduction);
 		insertReservationPrestation.setInt(2, idReservation);
-		
+
 		insertReservationPrestation.executeUpdate();
+	}
+
+	public int selectPersonne(String nom, String prenom, String mail)
+			throws SQLException {
+		selectPersonne.setString(1, nom);
+		selectPersonne.setString(2, prenom);
+		selectPersonne.setString(3, mail);
+
+		ResultSet set = selectPersonne.executeQuery();
+		if (set.next())
+			return set.getInt("idPersonne");
+		return -1;
+	}
+
+	public int countFactureOf(int idReservation) throws SQLException {
+		countFactureOfReservation.setInt(1, idReservation);
+
+		ResultSet set = countFactureOfReservation.executeQuery();
+
+		if (set.next())
+			return set.getInt("factures");
+		else
+			return 0;
+	}
+
+	public int getReservationProprietaire(int idReservation) throws SQLException {
+		getReservationProprietaire.setInt(1, idReservation);
+
+		ResultSet set = getReservationProprietaire.executeQuery();
+		if (set.next())
+			return set.getInt("idPersonne");
+		return -1;
 	}
 }

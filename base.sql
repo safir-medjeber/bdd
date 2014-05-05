@@ -43,7 +43,6 @@ CREATE TABLE Personne(
        prenom varchar(32),
        mail varchar(64),
        idAdresse integer, 
-       login integer,    
        PRIMARY KEY(idPersonne),
        FOREIGN KEY(idAdresse) REFERENCES Adresse(idAdresse)
 );

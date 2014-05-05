@@ -512,7 +512,6 @@ INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES 
 INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',47,4,803,139);
 INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour sans amis','Appartement',18,2,95,140);
 INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique','Appartement',18,2,95,141);
-
 INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',65,3,96,142);
 INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',94,7,761,143);
 INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',95,1,100,144);
@@ -528,3 +527,82 @@ INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES 
 INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',17,2,4340,154);
 INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',40,6,730,155);
 INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',58,4,6785,156);
+
+
+
+-- -----------------------
+-- ------- PRESTATIONS ---
+-- -----------------------
+
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,8);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('poterie',15,10);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,23);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('piscine',15,27);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('randonnee',15,29);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,29);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,35);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('zoo',15,35);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('2',43,36);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,37);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('poterie',15,37);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,47);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('piscine',15,47);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('randonnee',15,48);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,49);;
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('1',15,52);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,53);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('1',15,3);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,54);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,55);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('zoo',15,56);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('2',43,56);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,57);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('poterie',15,63);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,67);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('piscine',15,69);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('randonnee',15,72);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,80);
+
+
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('0',13,86);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('2',43,86);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,87);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('tennis',53,88);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,89);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('zoo',15,90);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('1',15,91);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',15,91);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('randonnee',15,92);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('1',15,92);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,93);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('1',15,93);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,94);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,95);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('zoo',15,96);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('2',43,96);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,97);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('poterie',15,97);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,97);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('piscine',15,97);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('randonnee',15,98);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,99);
+
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('0',13,100);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('2',43,100);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,102);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('tennis',53,103);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,104);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('kremelin',15,108);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('1',15,108);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',15,110);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('randonnee',15,113);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('kremelin',13,113);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('2',43,114);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,120);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('tennis',53,120);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,120);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('zoo',15,122);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('1',15,122);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',15,124);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('randonnee',15,130);
+

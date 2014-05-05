@@ -31,14 +31,13 @@ public class RechercheInBase {
 				decoup = lieu.split(" *, * ");
 				where += "(";
 				int i = 0;
-				for (i = 0; i < decoup.length-1; i++) 
+				for (i = 0; i < decoup.length - 1; i++)
 					where += " Adresse.ville='" + decoup[i] + "' OR ";
 				where += " Adresse.ville='" + decoup[i] + "' ";
 				where += ")";
 			}
 			if (prix != "") {
-				n++;
-				if (n > 0)
+				if (n++ > 0)
 					where += " AND ";
 				where += "(";
 				decoup = prix.split(" * ");
@@ -46,8 +45,7 @@ public class RechercheInBase {
 				where += ")";
 			}
 			if (typeLocation != "") {
-				n++;
-				if (n > 0)
+				if (n++ > 0)
 					where += " AND ";
 				where += "(";
 				decoup = typeLocation.split(" * ");
@@ -55,8 +53,7 @@ public class RechercheInBase {
 				where += ")";
 			}
 			if (surface != "") {
-				n++;
-				if (n > 0)
+				if (n++ > 0)
 					where += " AND ";
 				where += "(";
 				decoup = surface.split(" * ");
@@ -64,8 +61,7 @@ public class RechercheInBase {
 				where += ")";
 			}
 			if (nbPiece != "") {
-				n++;
-				if (n > 0)
+				if (n++ > 0)
 					where += " AND ";
 				where += "(";
 				decoup = nbPiece.split(" * ");
@@ -76,8 +72,7 @@ public class RechercheInBase {
 				decoup = prestation.split(" *, * ");
 				String presta = parsePrestation(decoup);
 				cmd += " LEFT JOIN Prestation on Prestation.idlogement=Logement.idlogement ";
-				n++;
-				if (n > 0)
+				if (n++ > 0)
 					where += " AND ";
 				where += "(";
 				where += presta;
@@ -86,11 +81,10 @@ public class RechercheInBase {
 
 			if (d1 != null && d2 != null) {
 				cmd += " LEFT JOIN Disponibilite on Logement.idlogement=Disponibilite.idlogement ";
-				n ++;
-				if (n > 0)
+				if (n++ > 0)
 					where += " AND ";
 				where += "(";
-				where += " jour<'" + d1 + "' AND jour>'" + d2 + "'";
+				where += " jour<'" + d1 + "' AND jour<'" + d2 + "'";
 				where += ")";
 			}
 
@@ -125,24 +119,33 @@ public class RechercheInBase {
 		return cmd;
 	}
 
+	private static String parseType(String type) {
+		if (type.equals("0"))
+			return "type='Appartement'";
+
+		if (type.equals("1"))
+			return "type='Chambre'";
+		return "";
+	}
+
 	public static String parseType(String[] decoup) {
 		String cmd = "";
-		for (int i = 0; i < decoup.length; i++) {
-			if (decoup[i].equals("0"))
-				cmd += "type='Appartement' ";
-
-			if (decoup[i].equals("1"))
-				cmd += "type='Chambre' ";
+		int i;
+		for (i = 0; i < decoup.length-1; i++) {
+			cmd += parseType(decoup[i]) + " OR ";
 		}
+		cmd += parseType(decoup[i]);
 		return cmd;
 
 	}
 
 	public static String parsePrestation(String[] decoup) {
 		String cmd = "";
-		for (int i = 0; i < decoup.length; i++) {
-			cmd += "prestation='" + decoup[i] + "' ";
+		int i;
+		for (i = 0; i < decoup.length - 1; i++) {
+			cmd += "prestation='" + decoup[i] + "' OR ";
 		}
+		cmd += "prestation='" + decoup[i] + "' ";
 		return cmd;
 
 	}

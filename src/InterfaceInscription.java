@@ -1,19 +1,22 @@
 import java.sql.SQLException;
 
-
 public class InterfaceInscription {
-	
-	public static void getCompte() throws SQLException   {
+
+	public static void getCompte() throws SQLException {
 		String login, password;
 		int n;
 		Interface.enTete("Inscription");
-		n = getPerson();
 		System.out.print("login: ");
 		login = ReadTools.readString();
-		password = PasswordField.readPassword("password: ");
-		Interface.connection.insertCompte(login, password, n);
+		if (Interface.connection.selectCompte(login))
+			ReadTools.continuer("Le login est déjà utilisé");
+		else {
+			password = PasswordField.readPassword("password: ");
+			n = getPerson();
+			Interface.connection.insertCompte(login, password, n);
+		}
 	}
-	
+
 	public static int getPerson() throws SQLException {
 		String nom, prenom, mail;
 		int adresse;
@@ -32,6 +35,8 @@ public class InterfaceInscription {
 	public static int getAddr() throws SQLException {
 		String pays, cp, ville, rue;
 		int numero;
+		
+		Interface.enTete2("Adresse");
 		System.out.print("Pays: ");
 		pays = ReadTools.readString();
 		System.out.print("Code Postal: ");

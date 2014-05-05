@@ -1,7 +1,6 @@
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
-import java.util.Set;
 
 public class InterfaceConnecte {
 	public static final int CHAMBRE = 1, APPART = 0;
@@ -13,8 +12,11 @@ public class InterfaceConnecte {
 				+ ": ");
 		if (Interface.connection.connecteCompte(login, password)) {
 			printConnecter(login);
-		} else
+		} else{
 			System.out.println("Erreur dans l'identifiant ou le mot de passe");
+			System.out.println(" ↵ pour continuer");
+			ReadTools.readString();
+		}
 	}
 
 	public static void printConnecter(String login) throws SQLException {
@@ -153,8 +155,8 @@ public class InterfaceConnecte {
 
 		Printer.printPrestation(prestationSet);
 
-		System.out.print("Entrer l'id à supprimer (ou : ");
-		id = ReadTools.readInt();
+		System.out.print("Entrer l'id à supprimer (ou ↵): ");
+		id = ReadTools.readEmptyInt();
 		if (id != -1)
 			Interface.connection.delPrestation(id);
 	}

@@ -5,6 +5,13 @@ import java.util.Scanner;
 public class ReadTools {
 	static Scanner in = new Scanner(System.in);
 
+	
+	public static void continuer(String s){
+		System.out.println(s);
+		System.out.println(" ↵ pour continuer");
+		ReadTools.readString();
+	}
+	
 	public static String readString() {
 		try {
 			return in.nextLine().toLowerCase();
@@ -88,5 +95,11 @@ public class ReadTools {
 			System.out.println("Recommencer");
 			return readDate(empty);
 		}
+	}
+	
+	public static boolean readYesNo(){
+		String s;
+		s = readString();
+		return s.equals("y") || s.equals("yes");
 	}
 }

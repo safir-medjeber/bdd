@@ -1,4 +1,3 @@
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Interface {
@@ -27,8 +26,10 @@ public class Interface {
 			enTete("AirChambreDhotes");
 			System.out.println("0 - Fin");
 			System.out.println("1 - Effectuer une recherche");
-			System.out.println("2 - Se connecter");
-			System.out.println("3 - S'inscrire");
+			System.out.println("2 - Reserver un logement");
+			System.out.println("3 - Modifier/Annuler une reservation");
+			System.out.println("4 - Se connecter");
+			System.out.println("5 - S'inscrire");
 
 			ligne(largeurEcran);
 			choix = ReadTools.readInt();
@@ -47,9 +48,15 @@ public class Interface {
 			InterfaceRecherche.listeCritere();
 			break;
 		case 2:
-			InterfaceConnecte.testeConnection();
+			InterfaceReservation.reservation();
 			break;
 		case 3:
+			
+			break;
+		case 4:
+			InterfaceConnecte.testeConnection();
+			break;
+		case 5:
 			InterfaceInscription.getCompte();
 			break;
 		default:

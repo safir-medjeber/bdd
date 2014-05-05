@@ -10,14 +10,16 @@ import java.util.Calendar;
 public class ConnectionBase {
 
 	static Connection connection;
-	private PreparedStatement selectCompte, selectVille, insertVille,
-			insertAdresse, insertPerson, insertCompte, selectAppartByLogin,
-			selectAppartByLoginAndId, insertAppart, insertPrestation,
-			insertPhoto, insertReduction, insertDureeReduction,
-			insertPeriodeReduction, selectPrestationOfLogement,
-			selectPhotoOfLogement, selectDureeReductionOfLogement,
-			selectPeriodeReductionOfLogement, reserveLogement, delReduction,
-			delPrestation, delPhoto;
+	private PreparedStatement selectCompte, selectLogin, selectVille,
+			insertVille, insertAdresse, insertPerson, insertCompte,
+			selectAppartById, selectAppartByLogin, selectAppartByLoginAndId,
+			insertAppart, insertPrestation, insertPhoto, insertReduction,
+			insertDureeReduction, insertPeriodeReduction,
+			selectPrestationOfLogement, selectPhotoOfLogement,
+			selectDureeReductionOfLogement, selectPeriodeReductionOfLogement,
+			reserveLogement, delReduction, delPrestation, delPhoto,
+			logementIsDisponible, transportIsDisponible;
+	PreparedStatement selectVilleOfLogement;
 
 	static Statement selectCritere;
 
@@ -27,6 +29,9 @@ public class ConnectionBase {
 		String query;
 		query = "SELECT login FROM Compte WHERE login=? AND password=?";
 		selectCompte = connection.prepareStatement(query);
+
+		query = "SELECT login FROM Compte WHERE login=?";
+		selectLogin = connection.prepareStatement(query);
 
 		query = "SELECT ville FROM Ville WHERE ville=?";
 		selectVille = connection.prepareStatement(query);
@@ -50,6 +55,9 @@ public class ConnectionBase {
 
 		query = "SELECT idLogement FROM Logement LEFT JOIN Adresse on Logement.idAdresse = Adresse.idAdresse WHERE login=? AND idLogement=?";
 		selectAppartByLoginAndId = connection.prepareStatement(query);
+
+		query = "SELECT idLogement FROM Logement WHERE idLogement=?";
+		selectAppartById = connection.prepareStatement(query);
 
 		query = "INSERT INTO Logement (Description, type, surface, nb_pieces, prix, idAdresse, login) VALUES (?,?,?,?,?,?,?)";
 		insertAppart = connection.prepareStatement(query,
@@ -92,13 +100,25 @@ public class ConnectionBase {
 
 		query = "DELETE FROM Reduction WHERE idReduction=?";
 		delReduction = connection.prepareStatement(query);
-		
+
 		query = "DELETE FROM Prestation WHERE idPrestation=?";
 		delPrestation = connection.prepareStatement(query);
-		
+
 		query = "DELETE FROM Photo WHERE idPhoto=?";
 		delPhoto = connection.prepareStatement(query);
 
+		query = "SELECT ville FROM Logement LEFT JOIN Adresse ON Logement.idAddresse = Adresse.idAdresse "
+				+ "WHERE idLogement=?";
+		selectVilleOfLogement = connection.prepareStatement(query);
+
+		query = "SELECT idLogement FROM Disponibilite WHERE ?<jour AND jour<?";
+		logementIsDisponible = connection.prepareStatement(query);
+
+		query = "SELECT nb_vehicle_libre - COUNT(Vehicule.*) as vehicules FROM Transport "
+				+ "LEFT JOIN Vehicule ON Transport.ville = Vehicule.ville "
+				+ "WHERE jour=? AND heure=? AND ville=?"
+				+ "GROUP BY ville";
+		transportIsDisponible = connection.prepareStatement(query);
 	}
 
 	public void close() throws SQLException {
@@ -154,6 +174,12 @@ public class ConnectionBase {
 		selectAppartByLogin.setString(1, login);
 
 		return selectAppartByLogin.executeQuery();
+	}
+
+	public boolean selectAppartement(int id) throws SQLException {
+		selectAppartById.setInt(1, id);
+
+		return selectAppartById.executeQuery().next();
 	}
 
 	public boolean selectAppartement(String login, int logement)
@@ -263,16 +289,18 @@ public class ConnectionBase {
 		delById(id, delPhoto);
 	}
 
-	private static void delById(int id, PreparedStatement p) throws SQLException{
+	private static void delById(int id, PreparedStatement p)
+			throws SQLException {
 		p.setInt(1, id);
 		p.executeUpdate();
 	}
-	
-	private static ResultSet selectById(int id, PreparedStatement p) throws SQLException{
+
+	private static ResultSet selectById(int id, PreparedStatement p)
+			throws SQLException {
 		p.setInt(1, id);
 		return p.executeQuery();
 	}
-	
+
 	public void insertDureeReduction(int i, int reduc, int duree)
 			throws SQLException {
 		int idReduc = insertReduction(reduc, i);
@@ -305,4 +333,32 @@ public class ConnectionBase {
 			p.setFloat(index, value);
 	}
 
+	public boolean selectCompte(String login) throws SQLException {
+		selectLogin.setString(1, login);
+
+		return selectLogin.executeQuery().next();
+	}
+
+	public boolean logementIsDisponible(int idLogement, Date debut, Date fin)
+			throws SQLException {
+		logementIsDisponible.setDate(1, debut);
+		logementIsDisponible.setDate(1, fin);
+
+		return !logementIsDisponible.executeQuery().next();
+	}
+
+	public boolean transportIsDisponible(int idLogement, Date jour, int heure, String ville) throws SQLException {
+		transportIsDisponible.setDate(1, jour);
+		transportIsDisponible.setInt(2, heure);
+		transportIsDisponible.setString(3, ville);
+		
+		ResultSet set = transportIsDisponible.executeQuery();
+		if(!set.next())
+			return false;
+		return set.getInt("vehicules") > 0;
+	}
+
+//	public ResultSet selectVilleOf(int idLogement) {
+//
+//	}
 }

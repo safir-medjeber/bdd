@@ -10,7 +10,7 @@ public class Printer {
 			System.out.println(("Reference\t: " + set.getInt("idLogement")));
 			System.out.println("Description\t: " + set.getString("description"));
 			System.out.println("Type\t\t: " + set.getString("type"));
-			System.out.println("Surface\t\t: " + set.getFloat("surface"));
+			System.out.println("Surface\t\t: " + set.getFloat("surface")+ "m2");
 			System.out
 			.println("Nbr de pieces\t: " + set.getString("nb_pieces"));
 			System.out.println("Prix journalier\t: " + set.getFloat("prix")+" €");

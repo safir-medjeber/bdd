@@ -15,8 +15,7 @@ public class InterfaceRecherche {
 		System.out.println("5 - Nombre de piece(s)");
 		System.out.println("6 - Prestation(s)");
 		System.out.println("7 - Date");
-		System.out.println("8 - Inclure transport à l'arrivée et au départ");
-		System.out.println("9 - Aucun");
+		System.out.println("8 - Aucun");
 		Interface.ligne(Interface.largeurEcran);
 
 		choix = ReadTools.readString();
@@ -37,6 +36,8 @@ public class InterfaceRecherche {
 		String nbPiece="";
 		String prestation="";
 		Date d1=null, d2=null;
+		int duree = 0;
+		int depart = 0, arrive = 0;
 		boolean transport=false;
 		boolean aucun=false;
 
@@ -133,16 +134,24 @@ public class InterfaceRecherche {
 			case 7:
 				Interface.enTete2("Specification date de depart et date de retour");
 			
-				System.out.println("Entrer la date de debut au format JJ/MM/AA: ");
+				System.out.println("Debut de la periode au format JJ/MM/AA: ");
 				d1 = ReadTools.readDate();
-				System.out.println("Entrer la date de fin au format JJ/MM/AA: ");
+				System.out.println("Fin de la periode au format JJ/MM/AA: ");
 				d2 = ReadTools.readDate();
+				System.out.println("Duree du sejour en jour: ");
+				duree = ReadTools.readInt();
+				
+				System.out.println("Souhaitez vous la prise en charge à l'aeroport ? (y,n)");
+				transport = ReadTools.readYesNo();
+				if(transport){
+					System.out.print("Heure de départ : ");
+					depart = ReadTools.readInt();
+					System.out.print("Heure d'arrive : ");
+					arrive = ReadTools.readInt();
+				}
+					
 				break;
-			
 			case 8:
-				transport = true;
-				break;
-			case 9:
 				aucun = true;
 				break;
 
@@ -150,9 +159,9 @@ public class InterfaceRecherche {
 				System.out.println("Erreur swich recherche");
 
 			}
-			RechercheInBase.selectionCritere(lieu, prix, typeLocation, surface, nbPiece, prestation, d1, d2,transport, aucun);
 
 		}
+		RechercheInBase.selectionCritere(lieu, prix, typeLocation, surface, nbPiece, prestation, d1, d2, duree, transport, arrive, depart, aucun);
 
 	}
 

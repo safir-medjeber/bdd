@@ -131,6 +131,7 @@ INSERT INTO Ville(ville) VALUES ('wellington');
 INSERT INTO Ville(ville) VALUES ('windhoek');
 INSERT INTO Ville(ville) VALUES ('yaoundé');
 INSERT INTO Ville(ville) VALUES ('zagreb');
+INSERT INTO Ville(ville) VALUES ('lyon');
 
 
 -- -----------------------
@@ -222,7 +223,8 @@ INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('France','75007','paris',
 INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('France','75008','paris','Robespierre',249);
 INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('France','75009','paris','Freud',85);
 INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('France','75010','paris','Raymond Point Rectangle.',249);
-INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('France','75000','paris','Des Lilas',85);
+INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('France','75001','paris','Des Lilas',85);
+INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('France','69003','lyon','De Gaulle',85);
 
 INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('Chine','100000','pékin','Sophie Germain',29);
 INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('Chine','100000','pékin','nobou ganagashi',25);
@@ -321,212 +323,154 @@ INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Venus','Cortez','Venus
 INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Joshua','Patton','Joshua.Patton.nulla@gmail.com',9);
 INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Caryn','Powers','Caryn.Powers@yahoo.fr',38);
 INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Uta','Donovan','Uta.Donovan@hotmail.fr',35);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Amena','Kramer','Amena.Kramer@yahoo.fr',59);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Jena','Guthrie','Jena.Guthrie@gmail.com',54);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Isabelle','English','Isabelle.English@hotmail.fr',6);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Vladimir','Hodge','Vladimir.Hodge@yahoo.fr',26);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Andrew','Carey','Andrew.Carey@gmail.com',66);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Malcolm','Jenkins','Malcolm.Jenkins@hotmail.fr',42);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Yeo','Gibson','Yeo.Gibson@yahoo.fr',14);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Destiny','Petersen','Destiny.Petersen@yahoo.fr',9);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Bianca','Miranda','Bianca.Miranda@gmail.com',18);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Otto','Brown','Otto.Brown@hotmail.fr',50);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Connor','Bryan','Connor.Bryan@hotmail.fr',40);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Arden','Buckner','Arden.Buckner@yahoo.fr',59);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Ramona','Berg','Ramona.Berg@gmail.com',19);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Austin','Good','Austin.Good@yahoo.fr',39);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Ursula','Miller','Ursula.Miller@gmail.com',68);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Ava','Walter','Ava.Walter@yahoo.fr',21);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Kareem','Colon','Kareem.Colon@gmail.com',44);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Lana','Hoover','Lana.Hoover@hotmail.fr',6);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Brianna','Crosby','Brianna.Crosby.parturient@gmail.com',34);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Sheila','Gomez','Sheila@hotmail.fr',53);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Curran','Fischer','Curran@gmail.com',45);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Petra','Roach','Petra@hotmail.fr',37);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Matthew','Cherry','Matthew.Cherry@yahoo.fr',11);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Inez','Dunn','Inez.Dunn.lectus@hotmail.fr',3);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Fuller','Hendricks','Fuller.Hendricks.quam@yahoo.fr',7);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Odysseus','Mcclain','Odysseus.Mcclain.Duis@gmail.com',37);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Bree','Dale','Bree@hotmail.fr',7);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Rina','Ross','Rina@hotmail.fr',1);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Aretha','Justice','Aretha@gmail.com',30);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Sybill','Reyes','Sybill.Reyes.vulputate@yahoo.fr',17);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Mia','Saunders','Mia@hotmail.fr',5);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Simon','Chambers','Simon.Chambers@yahoo.fr',59);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Myra','Gallegos','Myra@gmail.com',59);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Bianca','Pearson','Bianca.Pearson@hotmail.fr',13);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Amy','Bean','Amy.Bean@yahoo.fr',38);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Channing','King','Channing.King@gmail.com',66);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Nita','Mcbride','Nita.Mcbride@hotmail.fr',50);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Leigh','Ortiz','Leigh.Ortiz@ipsum@gmail.com',43);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Isaiah','Mclaughlin','Isaiah@hotmail.fr',42);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Adrienne','Miller','Adrienne.Miller@hotmail.fr',63);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Yuli','Eaton','Yuli.Eaton.nonummy@hotmail.fr',57);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Yuri','Norman','Yuri.Norman@gmail.com',16);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Judith','Vaughan','Judith.Vaughan@gmail.com',12);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Quinn','Haney','Quinn.Haney@hotmail.fr',10);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Dante','Knapp','Dante.Knapp@yahoo.fr',46);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Lewis','Ward','Lewis.Ward.orci@gmail.com',57);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Denise','Reid','Denise.Reid.yahoo.fr',48);
-INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Abra','Bates','Abra.Bates@yahoo.fr',28);
-
+INSERT INTO Personne (nom,prenom,mail,idAdresse) VALUES ('Lilian','Bettencourt','lilian@bett.com',85);
 
 ---------------------
 ------ COMPTE -------
 ---------------------
-INSERT INTO Compte (login,password,idPersonne) VALUES ('Reuben','NUQ17DUN3KZ',63);
-INSERT INTO Compte (login,password,idPersonne) VALUES ('Kevyn','KQD23DQV4RS',25);
-INSERT INTO Compte (login,password,idPersonne) VALUES ('Yardley','ZVZ79ZPJ7WG',37);
-INSERT INTO Compte (login,password,idPersonne) VALUES ('Keith','BTV62GEF0ND',16);
-INSERT INTO Compte (login,password,idPersonne) VALUES ('Hayley','AJY17QWF7TW',21);
-INSERT INTO Compte (login,password,idPersonne) VALUES ('Jonas','AIP06DAV4HO',15);
-INSERT INTO Compte (login,password,idPersonne) VALUES ('Chastity','MMK15IMF1RZ',1);
-INSERT INTO Compte (login,password,idPersonne) VALUES ('Stacy','GFA86BMS9NJ',44);
-INSERT INTO Compte (login,password,idPersonne) VALUES ('Janna','KAZ74SPH7LP',28);
-INSERT INTO Compte (login,password,idPersonne) VALUES ('Ciara','UOU67QCG1CZ',20);
-INSERT INTO Compte (login,password,idPersonne) VALUES ('Yoshio','NRN22LLO3HH',17);
-INSERT INTO Compte (login,password,idPersonne) VALUES ('Laith','ENA75TPK3TB',2);
-
-
+INSERT INTO Compte (login,password,idPersonne) VALUES ('Reuben','reub',1);
+INSERT INTO Compte (login,password,idPersonne) VALUES ('Kevyn','kev',3);
+INSERT INTO Compte (login,password,idPersonne) VALUES ('marc','',7);
+INSERT INTO Compte (login,password,idPersonne) VALUES ('bettencourt','bettencourt',16);
 
 ----------------------
 ------ LOGEMENT ------
 ----------------------
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Appartement',458,1,816,1);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',713,7,1087,2);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',202,5,1003,3);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Chambre',275,8,309,4);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',68,6,640,5);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',21,9,577,6);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Chambre',194,9,3258,7);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Appartement',417,6,3068,8);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',45,2,100,9);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Appartement',319,4,312,10);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',15,2,472,11);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',97,10,294,12);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Chambre',456,4,5141,13);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Appartement',377,6,8957,14);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Appartement',406,3,903,16);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Appartement',86,4,90,18);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',126,9,2241,19);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',513,10,149,20);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',649,2,49,21);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',451,6,3432,22);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Appartement',93,7,44,23);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',32,7,593,24);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Chambre',6,1,100,25);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Chambre',85,5,506,26);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',449,3,65,27);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',78,4,147,28);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',330,8,8269,29);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',66,1,225,30);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',17,2,4340,31);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',40,6,730,32);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',358,4,6785,33);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',94,3,5042,34);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',256,5,781,35);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Appartement',164,1,6900,36);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',18,2,9395,37);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',583,1,63622,38);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',252,4,5402,39);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',92,3,1354,40);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',397,8,498,89);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',86,9,1727,90);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',69,9,720,91);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Chambre',83,4,9149,92);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Appartement',85,1,6793,93);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Chambre',69,5,2082,94);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',93,4,3001,95);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',20,5,9531, 96);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Chambre',19,8,1902,97);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Chambre',233,8,634,98);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Appartement',95,4,285,99);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',91,1,231,100);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',23,2,825,101);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Chambre',31,10,169,102);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',47,4,803,103);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Chambre',46,8,898,104);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',12,4,966,105);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',65,3,96,106);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',94,7,761,59);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',95,1,100,60);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Appartement',556,8,381,61);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',63,9,285,62);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',57,1,162,63);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Chambre',85,8,27,64);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Chambre',518,7,53,65);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',402,8,367,66);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Appartement',36,3,561,68);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',671,6,840,69);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',604,4,161,71);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',97,4,903,72);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Chambre',436,8,298,73);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',132,4,926,74);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',63,3,76,75);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',94,7,761,76);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',95,1,469,77);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Appartement',56,8,381,78);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',63,9,225,79);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',57,1,362,80);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Chambre',865,8,237,81);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Chambre',51,7,55,82);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',42,8,37,83);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Appartement',36,3,57,84);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',671,6,80,85);
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Appartement',458,1,92,1,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',68,7,101,2,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',202,5,101,3,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Chambre',275,8,309,4,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Chambre',68,6,640,5,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',21,9,577,6,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Chambre',194,9,101,7,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Appartement',417,6,101,8,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Chambre',45,2,100,9,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Appartement',319,4,312,10,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',15,2,472,11,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',97,10,294,12,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Chambre',456,4,101,13,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Appartement',377,6,101,14,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Appartement',406,3,66,16,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Appartement',86,4,90,18,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Appartement',126,9,101,19,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',513,10,149,20,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',649,2,49,21,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Appartement',451,6,101,22,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Appartement',93,7,44,23,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',32,7,593,24,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Chambre',6,1,100,25,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Chambre',85,5,506,26,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',449,3,65,27,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Appartement',78,4,147,28,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',330,8,101,29,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',66,1,225,30,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',17,2,101,31,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',40,6,68,32,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Chambre',358,4,101,33,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',94,3,101,34,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',256,5,68,35,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Appartement',164,1,101,36,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',18,2,101,37,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',583,1,101,38,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Chambre',252,4,101,39,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',92,3,101,40,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',397,8,498,89,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',86,9,101,90,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',69,9,68,91,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Chambre',83,4,101,92,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Appartement',85,1,101,93,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Chambre',69,5,101,94,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',93,4,101,95,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',20,5,101, 96,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Chambre',19,8,101,97,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Chambre',233,8,634,98,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Appartement',95,4,285,99,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Chambre',91,1,231,100,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',23,2,92,101,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Chambre',31,10,169,102,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',47,4,92,103,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Chambre',46,8,92,104,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',12,4,66,105,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',65,3,96,106,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Appartement',94,7,68,59,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Appartement',95,1,100,60,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Appartement',556,8,381,61,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',63,9,285,62,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',57,1,162,63,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Chambre',85,8,27,64,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Chambre',518,7,53,65,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Chambre',402,8,367,66,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Appartement',36,3,561,68,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Chambre',671,6,92,69,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',604,4,161,71,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',97,4,66,72,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Chambre',436,8,298,73,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',132,4,66,74,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',63,3,76,75,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Appartement',94,7,68,76,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Appartement',95,1,469,77,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Appartement',56,8,381,78,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',63,9,225,79,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',57,1,362,80,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Chambre',92,8,237,81,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Chambre',51,7,55,82,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Chambre',42,8,37,83,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Appartement',36,3,57,84,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Chambre',671,6,80,85,'bettencourt');
 
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',115,2,72,106);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',987,10,94,107);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Chambre',456,4,51,108);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Appartement',37,6,87,109);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Appartement',46,3,93,110);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Appartement',96,1,90,111);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',126,9,21,112);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',513,10,349,113);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',649,2,69,114);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',451,6,342,115);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Appartement',93,7,3144,116);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',1000,7,8593,117);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Chambre',636,1,7315,118);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Chambre',835,5,506,119);
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',115,2,72,106,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',66,10,94,107,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Chambre',456,4,51,108,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Appartement',37,6,87,109,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Appartement',46,3,93,110,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Appartement',96,1,90,111,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Appartement',126,9,21,112,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',513,10,349,113,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',649,2,69,114,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Appartement',451,6,342,115,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Appartement',93,7,101,116,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',101,7,101,117,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Chambre',636,1,101,118,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Chambre',92,5,506,119,'marc');
 
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',44,3,665,120);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',78,4,1747,121);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',30,8,869,122);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',676,1,5225,123);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',87,2,440,124);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',40,6,730,125);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',17,2,4340,126);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',40,6,730,127);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',58,4,6785,128);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',94,3,5042,129);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',256,5,3781,130);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Appartement',14,1,6900,131);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',18,2,95,132);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',583,12,6622,133);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',252,4,52,134);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',72,3,4,135);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',37,8,8,136);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',98,9,7,137);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',69,9,2,138);
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',44,3,665,120,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Appartement',78,4,101,121,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',30,8,92,122,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',676,1,101,123,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',87,2,440,124,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',40,6,68,125,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',17,2,101,126,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',40,6,68,127,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Chambre',58,4,101,128,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',94,3,101,129,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',256,5,101,130,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Appartement',14,1,101,131,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',18,2,95,132,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',583,12,101,133,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Chambre',252,4,52,134,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',72,3,40,135,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',37,8,80,136,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',98,9,70,137,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',69,9,20,138,'marc');
 
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Appartement',47,4,803,139);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour sans amis','Appartement',18,2,95,140);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique','Appartement',18,2,95,141);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',65,3,96,142);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',94,7,761,143);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Situe en plein centre ville','Appartement',95,1,100,144);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Appartement',556,8,381,145);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',63,9,285,146);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',57,1,162,147);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Chambre',85,8,27,148);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Chambre',518,7,53,149);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',402,8,367,150);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Studio de charme','Appartement',36,3,561,151);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',87,2,440,152);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',40,6,730,153);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Pour un sejour romantique ou familial','Chambre',17,2,4340,154);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Le studio beneficie d une entree independante','Appartement',40,6,730,155);
-INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse) VALUES ('Appartement propre et bien meuble','Chambre',58,4,6785,156);
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Appartement',47,4,92,139,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour sans amis','Appartement',18,2,95,140,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique','Appartement',18,2,95,141,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',65,3,96,142,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Appartement',94,7,68,143,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Situe en plein centre ville','Appartement',95,1,100,144,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Appartement',556,8,381,145,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',63,9,285,146,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',57,1,162,147,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Chambre',85,8,27,148,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Chambre',518,7,53,149,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Chambre',402,8,367,150,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Studio de charme','Appartement',36,3,561,151,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',87,2,440,152,'Kevyn');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',40,6,68,153,'Reuben');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Pour un sejour romantique ou familial','Chambre',17,2,101,154,'bettencourt');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Le studio beneficie d une entree independante','Appartement',40,6,68,155,'marc');
+INSERT INTO Logement (description,type,surface,nb_pieces,prix,idAdresse,login) VALUES ('Appartement propre et bien meuble','Chambre',58,4,101,156,'Kevyn');
 
 
 
@@ -550,6 +494,8 @@ INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('piscine',15,47);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('randonnee',15,48);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,49);;
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('1',15,52);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('0',15,52);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('piscine',15,52);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,53);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('1',15,3);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,54);
@@ -568,6 +514,9 @@ INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('0',13,86);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('2',43,86);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',33,87);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('tennis',53,88);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('0',0,88);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('1',0,88);
+INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('2',0,88);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('golf',15,89);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('zoo',15,90);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('1',15,91);
@@ -606,6 +555,21 @@ INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('1',15,122);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('3',15,124);
 INSERT INTO Prestation (prestation, prix, idLogement) VALUES ('randonnee',15,130);
 
+-------------------
+--- Reservation ---
+-------------------
+INSERT INTO Reservation (date_reservation,debut,fin,idPersonne,idLogement)
+VALUES 
+('2013-04-03','2013-04-05','2013-02-03',6,59),
+(),
+
+---------------------
+--- Disponibilite ---
+---------------------
+INSERT INTO Disponibilite (jour,idLogement) VALUES
+('2013-04-03',59),
+('2013-04-04',59),
+('2013-04-05',59),
 
 -----------------
 --- Transport ---
@@ -615,3 +579,9 @@ INSERT INTO Transport(ville, nb_vehicule_libre, prix) VALUES
 ('paris', 10, 40),
 ('pékin', 100, 15),
 ('moscou', 5, 150);
+
+
+------------------
+--- Suggestion ---
+------------------
+INSERT INTO Suggestion(suggestion,ville) VALUES ('Visite au kremlin', 'moscou');

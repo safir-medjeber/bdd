@@ -97,13 +97,13 @@ public class InterfaceReservation {
 		Interface.enTete("Payer");
 		System.out.println("0 - Payer maintenant");
 		System.out.println("1 - Payer plus tard");
-
+		System.out.println("Votre id de resrvation est : " + idReservation);
 		int choix = ReadTools.readInt();
 		switch (choix) {
-		case 1:
+		case 0:
 			payer(idReservation);
 			break;
-		case 2:
+		case 1:
 			ReadTools.continuer("Vous pouvez payer à partir du menu");
 			break;
 		default:
@@ -112,14 +112,15 @@ public class InterfaceReservation {
 		}
 	}
 
-	private static void payer(int idReservation) throws SQLException {
+	public static void payer(int idReservation) throws SQLException {
 		Interface.enTete("Payer");
 
-		int n = Interface.connection.countFactureOf(idReservation);
-		int loueur = Interface.connection
-				.getReservationProprietaire(idReservation);
-		
-		// TODO
-		// Calculer le prix, avec reductions
+		int personne = Interface.connection.getReservationLocataire(idReservation);
+		int n = Interface.connection.countFactureOf(personne);
+		Printer.printPrix(Interface.connection.getPrix(idReservation), 
+				Interface.connection.getPrixPrestation(idReservation),
+				Interface.connection.getPourcentageDure(idReservation));
+		//Interface.connection.insertFacture(n, personne, n, idReservation);
+		ReadTools.continuer("");
 	}
 }

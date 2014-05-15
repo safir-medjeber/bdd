@@ -21,7 +21,8 @@ public class ConnectionBase {
 			delPrestation, delPhoto, logementIsDisponible,
 			transportIsDisponible, insertReservation, insertVehicule,
 			insertReservationPrestation, countFactureOfReservation,
-			getReservationProprietaire;
+			getReservationProprietaire, getReservationLocataire,
+			getPrix, getPrixPrestation, getPourcentageDure, insertFacture;
 
 	PreparedStatement selectVilleOfLogement;
 
@@ -40,7 +41,7 @@ public class ConnectionBase {
 		query = "SELECT ville FROM Ville WHERE ville=?";
 		selectVille = connection.prepareStatement(query);
 
-		query = "SELECT idPersonne FROM Personne WHERE nom=? prenom=? mail=?";
+		query = "SELECT idPersonne FROM Personne WHERE nom=? AND prenom=? AND mail=?";
 		selectPersonne = connection.prepareStatement(query);
 
 		query = "INSERT INTO Ville (ville) VALUES (?)";
@@ -121,12 +122,10 @@ public class ConnectionBase {
 		query = "SELECT idLogement FROM Disponibilite WHERE ?<jour AND jour<?";
 		logementIsDisponible = connection.prepareStatement(query);
 
-		query = "SELECT nb_vehicule_libre - COUNT(Vehicule.*) as vehicules FROM Transport "
-				+ "LEFT JOIN Vehicule ON Transport.ville = Vehicule.idTransport "
-				+ "WHERE (jour=? OR jour IS NULL)"
-				+ "AND (heure=? OR heure IS NULL)"
-				+ "AND ville=?"
-				+ " GROUP BY ville, jour, heure";
+		query = "SELECT ville as vehicules FROM Transport "
+				+ "WHERE ville=?"
+				+ "AND nb_vehicule_libre > (SELECT Count(Vehicule.idTransport) FROM Vehicule "
+				+ "WHERE idTransport=? AND jour=? AND heure=?)";
 		transportIsDisponible = connection.prepareStatement(query);
 
 		query = "INSERT INTO Reservation(date_reservation, debut, fin, idPersonne, idLogement) "
@@ -140,16 +139,41 @@ public class ConnectionBase {
 		query = "INSERT INTO PrestationOfReservation (idPrestation, idReservation) VALUES (?,?)";
 		insertReservationPrestation = connection.prepareStatement(query);
 
-		query = "SELECT COUNT(*) as factures FROM Facture LEFT JOIN Reservation "
-				+ "ON Reservation.idPersonne = Facture.idPayeur "
-				+ "WHERE idReservation=?";
+		query = "SELECT COUNT(*) as factures FROM Facture "
+				+ "WHERE idPayeur=? " + "AND datefacture>current_date-182";
 		countFactureOfReservation = connection.prepareStatement(query);
 
-		query = "SELECT idPersonne FROM Personne LEFT JOIN Compte ON Compte.idPersonne = Personne.idPersonne "
+		query = "SELECT Compte.idPersonne FROM Personne LEFT JOIN Compte ON Compte.idPersonne = Personne.idPersonne "
 				+ "LEFT JOIN Logement ON Logement.login = Compte.login "
-				+ "LEFT JOIN Reservation ON Reservation.idLogement = Logment.idLogement "
+				+ "LEFT JOIN Reservation ON Reservation.idLogement = Logement.idLogement "
 				+ "WHERE idReservation=?";
 		getReservationProprietaire = connection.prepareStatement(query);
+
+		query = "SELECT idPersonne FROM Reservation WHERE idReservation=?";
+		getReservationLocataire = connection.prepareStatement(query);
+
+		query = "SELECT Logement.prix as prix_jour, "
+				+ "Logement.prix * (fin - debut) as prix_sejour "
+				+ "FROM Reservation "
+				+ "LEFT JOIN Logement ON Logement.idLogement = Reservation.idReservation "
+				+ "WHERE idReservation=?";
+		getPrix = connection.prepareStatement(query);
+
+		query = "SELECT SUM(prix) as prix_prestations FROM prestationofreservation as por "
+				+ "LEFT JOIN Prestation ON por.idPrestation = Prestation.idPrestation "
+				+ "WHERE idReservation=?";
+		getPrixPrestation = connection.prepareStatement(query);
+		
+		query = "SELECT pourcentage FROM Reservation LEFT JOIN Reduction ON Reduction.idLogement = Reservation.idLogement "
+				+ "LEFT JOIN Reduction_Duree ON Reduction_Duree.idReduction = Reduction.idreduction "
+				+ "WHERE Reduction_duree.duree_min > fin-debut "
+				+ "AND Reduction.idReduction = ?";
+		getPourcentageDure = connection.prepareStatement(query);
+		
+		query = "INSERT INTO Facture (datefacture, montant, idpayeur, idloueur, idReservation) "
+				+ "Values(current_date, ?,?,?,?)";
+		insertFacture = connection.prepareStatement(query);
+				
 	}
 
 	public void close() throws SQLException {
@@ -380,14 +404,13 @@ public class ConnectionBase {
 
 	public boolean transportIsDisponible(int idLogement, Date jour, int heure,
 			String ville) throws SQLException {
-		transportIsDisponible.setDate(1, jour);
-		transportIsDisponible.setInt(2, heure);
-		transportIsDisponible.setString(3, ville);
+		transportIsDisponible.setString(1, ville);
+		transportIsDisponible.setString(2, ville);
+		transportIsDisponible.setDate(3, jour);
+		transportIsDisponible.setInt(4, heure);
 
 		ResultSet set = transportIsDisponible.executeQuery();
-		if (!set.next())
-			return false;
-		return set.getInt("vehicules") > 0;
+		return set.next();
 	}
 
 	public String selectVilleOf(int idLogement) throws SQLException {
@@ -439,8 +462,8 @@ public class ConnectionBase {
 		return -1;
 	}
 
-	public int countFactureOf(int idReservation) throws SQLException {
-		countFactureOfReservation.setInt(1, idReservation);
+	public int countFactureOf(int idPersonne) throws SQLException {
+		countFactureOfReservation.setInt(1, idPersonne);
 
 		ResultSet set = countFactureOfReservation.executeQuery();
 
@@ -450,7 +473,19 @@ public class ConnectionBase {
 			return 0;
 	}
 
-	public int getReservationProprietaire(int idReservation) throws SQLException {
+	int getReservationLocataire(int idReservation) throws SQLException {
+		getReservationLocataire.setInt(1, idReservation);
+
+		ResultSet set = getReservationLocataire.executeQuery();
+
+		if (set.next())
+			return set.getInt("idPersonne");
+		else
+			return -1;
+	}
+
+	public int getReservationProprietaire(int idReservation)
+			throws SQLException {
 		getReservationProprietaire.setInt(1, idReservation);
 
 		ResultSet set = getReservationProprietaire.executeQuery();
@@ -458,4 +493,40 @@ public class ConnectionBase {
 			return set.getInt("idPersonne");
 		return -1;
 	}
+
+	public ResultSet getPrix(int idReservation) throws SQLException {
+		getPrix.setInt(1, idReservation);
+
+		return getPrix.executeQuery();
+	}
+
+	public ResultSet getPrixPrestation(int idReservation) throws SQLException{
+		getPrixPrestation.setInt(1, idReservation);
+		
+		return getPrixPrestation.executeQuery();
+	}
+	
+	public ResultSet getPourcentageDure(int Reduction) throws SQLException{
+		getPourcentageDure.setInt(1, Reduction);
+		
+		return getPourcentageDure.executeQuery();
+	}
+	
+	public boolean reservationExiste(int idReservation) throws SQLException {
+		getReservationLocataire.setInt(1, idReservation);
+
+		return getReservationLocataire.executeQuery().next();
+	}
+
+	public void insertFacture(float n, int personne, int n2, int idReservation) throws SQLException {
+		insertFacture.setFloat(1, n);
+		insertFacture.setInt(2, personne);
+		insertFacture.setInt(3, n2);
+		insertFacture.setInt(4, idReservation);
+	
+		insertFacture.executeUpdate();
+	}
+	
+	
+
 }

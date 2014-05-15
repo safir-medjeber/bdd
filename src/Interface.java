@@ -5,13 +5,13 @@ public class Interface {
 	static int largeurEcran = 70;
 
 	public static void main(String[] args) {
-		if (args.length != 2)
+		if (args.length != 1)
 			usage();
 
 		try {
-			// String password =
-			// PasswordField.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
-			connection = new ConnectionBase(args[0], args[1]);
+			 String password =
+			 PasswordField.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
+			connection = new ConnectionBase(args[0], password);
 			menuPrincipal();
 
 		} catch (SQLException e) {
@@ -51,7 +51,10 @@ public class Interface {
 			InterfaceReservation.reservation();
 			break;
 		case 3:
-			
+			System.out.println("Entrez l'id de reservation");
+			choice = ReadTools.readInt();
+			if(connection.reservationExiste(choice))
+				InterfaceReservation.payer(choice);
 			break;
 		case 4:
 			InterfaceConnecte.testeConnection();

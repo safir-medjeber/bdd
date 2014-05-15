@@ -49,7 +49,7 @@ WHERE ( Adresse.ville='pékin' )
 SELECT AVG(Logement.prix*7) FROM Logement 
 
 -- 4
-SELECT AVG(COUNT(Logement.idLogement)) FROM Logement GROUP BY login
+SELECT AVG(count) FROM ( SELECT COUNT(Logement.idLogement) as count FROM Logement GROUP BY login) t
 
 -- 5
 SELECT COUNT(idFacture) FROM Facture 

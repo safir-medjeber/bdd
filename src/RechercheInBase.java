@@ -8,8 +8,8 @@ public class RechercheInBase {
 
 	public static void selectionCritere(String lieu, String prix,
 			String typeLocation, String surface, String nbPiece,
-			String prestation, Date debut, Date fin, int duree, boolean transport, int depart,
-			int arrive, boolean aucunCrit)
+			String prestation, Date debut, Date fin, int duree,
+			boolean transport, int depart, int arrive, boolean aucunCrit)
 			throws SQLException {
 
 		int n = 0;
@@ -103,8 +103,8 @@ public class RechercheInBase {
 				}
 				where = where.substring(0, where.length() - 2);
 				where += ")))";
-				
-				if (transport == true){
+
+				if (transport == true) {
 					if (n++ > 0)
 						where += "\n\tAND ";
 
@@ -115,12 +115,11 @@ public class RechercheInBase {
 				}
 			}
 
-
 			if (!(where.equals(" WHERE "))) {
 				cmd += where;
 
 			}
-			System.out.println(cmd);
+			//	System.out.println(cmd);
 			Printer.printLogement(selectCritere.executeQuery(cmd));
 		}
 	}
@@ -129,11 +128,11 @@ public class RechercheInBase {
 		return "Adresse.ville IN ("
 				+ "SELECT ville FROM Transport "
 				+ "LEFT JOIN Vehicule ON Transport.ville = Vehicule.idTransport "
-				+ "WHERE  ville=Adresse.ville "
-				+ "AND (heure="+heure+ " OR heure IS NULL) "
-				+ "AND (jour='"+ date +"' OR jour IS NULL) "
-				+ "GROUP BY ville "
-				+ "HAVING COUNT(Vehicule) < nb_vehicule_libre)";	}
+				+ "WHERE  ville=Adresse.ville " + "AND (heure=" + heure
+				+ " OR heure IS NULL) " + "AND (jour='" + date
+				+ "' OR jour IS NULL) " + "GROUP BY ville "
+				+ "HAVING COUNT(Vehicule) < nb_vehicule_libre)";
+	}
 
 	public static String parseInterval(String[] decoup, String condition) {
 		String cmd = "";

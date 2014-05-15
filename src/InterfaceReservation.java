@@ -42,22 +42,29 @@ public class InterfaceReservation {
 		System.out
 				.println("Souhaitez-vous les transport à l'arrivée et au départ ?(y/n)");
 		transport = ReadTools.readYesNo();
-		if (transport) {
-			System.out.println("Quelle est l'heure d'arrivée ?");
-			arrivee = ReadTools.readInt();
-			if (!Interface.connection.transportIsDisponible(idLogement, debut,
-					arrivee, ville)) {
-				ReadTools.continuer("Transport non disponible pour l'arrivée");
-				return;
+		if (transport)
+			if (Interface.connection.villeADesTransport(ville)) {
+				System.out.println("Quelle est l'heure d'arrivée ?");
+				arrivee = ReadTools.readInt();
+				if (Interface.connection.transportIsDisponible(idLogement,
+						debut, arrivee, ville)) {
+					ReadTools
+							.continuer("Transport non disponible pour l'arrivée");
+					return;
+				}
+				System.out.println("Quelle est l'heure de départ ?");
+				depart = ReadTools.readInt();
+				if (Interface.connection.transportIsDisponible(idLogement, fin,
+						depart, ville)) {
+					ReadTools
+							.continuer("Transport non disponible pour le départ");
+					return;
+				}
 			}
-			System.out.println("Quelle est l'heure de départ ?");
-			depart = ReadTools.readInt();
-			if (!Interface.connection.transportIsDisponible(idLogement, fin,
-					depart, ville)) {
-				ReadTools.continuer("Transport non disponible pour le départ");
-				return;
+			else{
+				System.out.println("Cette ville ne dispose pas de ce service");
+				transport = false;
 			}
-		}
 
 		System.out.println("Souhaitez-vous des prestations ? (y/n)");
 		prestation = ReadTools.readYesNo();
@@ -115,12 +122,14 @@ public class InterfaceReservation {
 	public static void payer(int idReservation) throws SQLException {
 		Interface.enTete("Payer");
 
-		int personne = Interface.connection.getReservationLocataire(idReservation);
-		int n = Interface.connection.countFactureOf(personne);
-		Printer.printPrix(Interface.connection.getPrix(idReservation), 
+		int locataire = Interface.connection
+				.getReservationLocataire(idReservation);
+		int proprietaire = Interface.connection.getReservationProprietaire(idReservation);
+		int n = Interface.connection.countFactureOf(locataire);
+		Printer.printPrix(Interface.connection.getPrix(idReservation),
 				Interface.connection.getPrixPrestation(idReservation),
 				Interface.connection.getPourcentageDure(idReservation));
-		//Interface.connection.insertFacture(n, personne, n, idReservation);
+		Interface.connection.insertFacture(n, locataire, proprietaire, idReservation);
 		ReadTools.continuer("");
 	}
 }

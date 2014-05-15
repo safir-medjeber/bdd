@@ -22,7 +22,7 @@ public class ConnectionBase {
 			transportIsDisponible, insertReservation, insertVehicule,
 			insertReservationPrestation, countFactureOfReservation,
 			getReservationProprietaire, getReservationLocataire,
-			getPrix, getPrixPrestation, getPourcentageDure, insertFacture;
+			getPrix, getPrixPrestation, getPourcentageDure, insertFacture, villeADesTransport;
 
 	PreparedStatement selectVilleOfLogement;
 
@@ -173,7 +173,9 @@ public class ConnectionBase {
 		query = "INSERT INTO Facture (datefacture, montant, idpayeur, idloueur, idReservation) "
 				+ "Values(current_date, ?,?,?,?)";
 		insertFacture = connection.prepareStatement(query);
-				
+		
+		query = "SELECT ville FROM Transport WHERE ville=?";
+		villeADesTransport = connection.prepareStatement(query);
 	}
 
 	public void close() throws SQLException {
@@ -408,7 +410,7 @@ public class ConnectionBase {
 		transportIsDisponible.setString(2, ville);
 		transportIsDisponible.setDate(3, jour);
 		transportIsDisponible.setInt(4, heure);
-
+		
 		ResultSet set = transportIsDisponible.executeQuery();
 		return set.next();
 	}
@@ -518,13 +520,19 @@ public class ConnectionBase {
 		return getReservationLocataire.executeQuery().next();
 	}
 
-	public void insertFacture(float n, int personne, int n2, int idReservation) throws SQLException {
+	public void insertFacture(float n, int loueur, int payeur, int idReservation) throws SQLException {
 		insertFacture.setFloat(1, n);
-		insertFacture.setInt(2, personne);
-		insertFacture.setInt(3, n2);
+		insertFacture.setInt(2, loueur);
+		insertFacture.setInt(3, payeur);
 		insertFacture.setInt(4, idReservation);
 	
 		insertFacture.executeUpdate();
+	}
+
+	public boolean villeADesTransport(String ville) throws SQLException {
+		villeADesTransport.setString(1, ville);
+		
+		return villeADesTransport.executeQuery().next();
 	}
 	
 	

@@ -119,7 +119,7 @@ public class RechercheInBase {
 				cmd += where;
 
 			}
-			//	System.out.println(cmd);
+				System.out.println(cmd);
 			Printer.printLogement(selectCritere.executeQuery(cmd));
 		}
 	}
@@ -156,10 +156,10 @@ public class RechercheInBase {
 
 	private static String parseType(String type) {
 		if (type.equals("0"))
-			return "type='Appartement'";
+			return "type='0'";
 
 		if (type.equals("1"))
-			return "type='Chambre'";
+			return "type='1'";
 		return "";
 	}
 

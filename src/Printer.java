@@ -10,7 +10,11 @@ public class Printer {
 			System.out.println(("Reference\t: " + set.getInt("idLogement")));
 			System.out
 					.println("Description\t: " + set.getString("description"));
-			System.out.println("Type\t\t: " + set.getString("type"));
+			System.out.print("Type\t\t: ");
+			if(set.getString("type").equals("0"))
+				System.out.println("Appartement");
+			else
+				System.out.println("Chambre");
 			System.out
 					.println("Surface\t\t: " + set.getFloat("surface") + "m2");
 			System.out

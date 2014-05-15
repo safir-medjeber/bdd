@@ -4,7 +4,9 @@ LEFT JOIN Adresse ON Adresse.idAdresse=Logement.idAdresse
 LEFT JOIN Disponibilite ON Disponibilite.idLgogement != Logement.idLogement
 WHERE Logement.type = '0' 
       AND ville='paris'
-      AND '2015-04-4'<jour AND jour<'2015-04-08' ;
+      AND idLogement NOT IN 
+      	  (SELECT idLogement FROM Disponibilite
+	   WHERE '2015-04-4'<jour AND jour<'2015-04-08');
 
 -- 2
 SELECT * FROM Logement
@@ -137,10 +139,13 @@ SELECT Login FROM Logement LEFT JOIN Adresse ON Logement.idAdresse = Adresse.idA
 
 --11
 SELECT SUM(montant) - 10/100 * SUM(montant) as revenue FROM Facture LEFT JOIN Personne ON idPersonne = idLoueur 
-WHERE nom ='bettencourt' AND '2014-01-01'<=datefacture AND datefacture<'2015-01-01' 
+WHERE nom ='Bettencourt' AND '2014-01-01'<=datefacture AND datefacture<'2015-01-01' 
 
 --12
-SELECT COUNT(Disponibilite.*) as reserve, COUNT(Logement.*) as logemen FROM Disponibilite 
-LEFT JOIN Logement ON Logement.idLogement = Disponibilite.idLogement 
+SELECT COUNT(Disponibilite.idLogement) / (SELECT Count(*) * 365 FROM Logement LEFT JOIN Adresse ON Adresse.idAdresse = Logement.idAdresse
+where ville='berlin' ) as reserve FROM Logement 
 LEFT JOIN Adresse ON Adresse.idAdresse = Logement.idAdresse
-WHERE ville = 'berlin' AND '2014-01-01'<jour AND jour<'2015-01-01'
+LEFT JOIN Disponibilite ON Logement.idLogement = Disponibilite.idLogement 
+WHERE  ville='berlin' AND '2014-01-01'<jour AND jour<'2015-01-01';
+
+

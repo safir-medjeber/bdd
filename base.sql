@@ -159,7 +159,7 @@ CREATE TABLE Reduction_periode(
 
 CREATE TABLE Facture(
        idFacture serial,
-       dateFacture timestamp,		
+       dateFacture date,		
        montant real, 
        idPayeur integer,
        idLoueur integer,

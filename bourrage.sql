@@ -132,6 +132,7 @@ INSERT INTO Ville(ville) VALUES ('windhoek');
 INSERT INTO Ville(ville) VALUES ('yaoundé');
 INSERT INTO Ville(ville) VALUES ('zagreb');
 INSERT INTO Ville(ville) VALUES ('lyon');
+INSERT INTO Ville(ville) VALUES ('marseille');
 
 
 -- -----------------------
@@ -299,7 +300,7 @@ INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('Brésil','20000-000','ri
 INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('Brésil','20000-000','rio de janeiro','Nunc Rd.',358);
 INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('Brésil','20000-000','rio de janeiro','Auctor. Av.',500);
 INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('Brésil','20000-000','rio de janeiro','Quis Avenue',473);
-
+INSERT INTO Adresse (pays,cp,ville,rue,numero) VALUES ('Brésil','20000-000','rio de janeiro','sant joe',504);
 
 
 ----------------------------
